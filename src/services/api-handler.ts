@@ -3,7 +3,8 @@ import Storage from '@/utils/storage';
 import { v4 as uuidv4 } from 'uuid';
 import axios, { AxiosError } from 'axios';
 
-const apiHandler = axios.create({
+// we are exporting this so that it can be used on the server without any window references
+export const axiosInstance = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -15,6 +16,11 @@ const apiHandler = axios.create({
 
 export const accessToken = Storage.getCookie('token') || '';
 export const currentUser = Storage.getCookie('cu') || '';
+
+const apiHandler = axios.create({
+  baseURL: axiosInstance.defaults.baseURL,
+  headers: { ...axiosInstance.defaults.headers },
+});
 
 if (currentUser) apiHandler.defaults.headers['x-created-by'] = currentUser;
 if (accessToken) apiHandler.defaults.headers.Authorization = accessToken;

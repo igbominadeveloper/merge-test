@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { useRouter } from 'next/navigation';
-import Filters from '@/components/Dashboard/transaction-history/table/filters';
 import DesktopTable from '@/components/table/desktop';
 import { useTransactionFilters } from '@/hooks/useTransactionFilters';
 import { Column } from '@/types/general';
@@ -10,10 +9,11 @@ import { formatAmount, formatDateString, toUrlQuery, trimText } from '@/utils/he
 import { ROUTES } from '@/utils/routes';
 import { useAllTransactions } from '@/services/queries/transaction';
 import DesktopRow from './desktop-row';
+import TransactionHistoryTableFilters from './filters';
 
 dayjs.extend(localizedFormat);
 
-export default function TransactionTable() {
+export default function DesktopTransactionTable() {
   const {
     search,
     transactionType,
@@ -121,7 +121,7 @@ export default function TransactionTable() {
   return (
     <>
       <div className="mt-5">
-        <Filters
+        <TransactionHistoryTableFilters
           setEndDate={setEndDate}
           setSearch={setSearch}
           setStartDate={setStartDate}

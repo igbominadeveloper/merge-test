@@ -10,7 +10,9 @@ const Storage = {
 
   getCookie(key: string) {
     const data = Cookies.get(key);
-    return Encrypt.decrypt(data as string);
+    if (!data) return null;
+    const decrypted = Encrypt.decrypt(data as string);
+    return decrypted;
   },
 
   removeCookie(key: string) {

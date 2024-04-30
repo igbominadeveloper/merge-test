@@ -7,9 +7,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { formatAmount, formatDateString } from '@/utils/helpers';
 import { useTransaction } from '@/services/queries/transaction';
 import { Transaction } from '@/types/transaction';
-import { generateReceipt } from '@/services/clients/transaction';
 import { ROUTES } from '@/utils/routes';
-import TransactionStatusBadge from './TransactionStatusBadge';
+import { generateReceipt } from '@/services/clients/transaction';
+import TransactionStatusBadge from './transaction-status-badge';
 
 interface LineItemProps {
   title: string;
@@ -176,8 +176,8 @@ export default function TransactionDetails() {
       const receiptBuffer = await generateReceipt(transaction);
       if (!receiptBuffer) return;
 
-      const pdfBlob = new Blob([new Uint8Array(receiptBuffer!)], { type: 'image/png' });
-      const url = URL.createObjectURL(pdfBlob);
+      const pngBlob = new Blob([new Uint8Array(receiptBuffer!)], { type: 'image/png' });
+      const url = URL.createObjectURL(pngBlob);
 
       // Trigger download
       const link = document.createElement('a');

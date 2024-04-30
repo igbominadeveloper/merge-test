@@ -8,7 +8,7 @@ import useParamSearch from '@/hooks/useParamSearch';
 import DesktopFilters from './desktop';
 import MobileFilters from './mobile';
 
-export default function TableFilters(props: FilterProps) {
+export default function TransactionHistoryTableFilters(props: FilterProps) {
   const {
     endDate,
     search,
