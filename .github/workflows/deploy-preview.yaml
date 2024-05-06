@@ -1,0 +1,77 @@
+name: Deploy Preview
+
+on:
+  pull_request:
+    branches:
+      - dev
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    if: '!github.event.pull_request.draft'
+    steps:
+      - uses: actions/checkout@main
+        with:
+          # Necessary to grab the HEAD commit from the source branch when
+          # acting on a PR. Otherwise, `git log` will only contain the merge commit
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@main
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@main
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ github.event.number }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - uses: actions/cache@main
+        id: next-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: .next
+          key: ${{ runner.os }}-next-${{ github.event.number }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Install Netlify CLI
+        run: yarn add -D netlify-cli
+
+      - name: Create Deploy Message
+        id: deploymessage
+        run: |
+          DEPLOY_MESSAGE="${{ github.event.pull_request.title }}"
+          # Set it in env
+          echo "DEPLOY_MESSAGE='$DEPLOY_MESSAGE'" >> $GITHUB_OUTPUT
+
+      - name: Build and Deploy the app
+        id: deploy
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          PR_NUMBER: ${{ github.event.number }}
+          DEPLOY_MESSAGE: ${{ steps.deploymessage.outputs.DEPLOY_MESSAGE }}
+        run: |
+          COMMAND="netlify deploy --build --context deploy-preview --auth $NETLIFY_AUTH_TOKEN --site $NETLIFY_SITE_ID --alias deploy-preview-$PR_NUMBER --message $DEPLOY_MESSAGE"
+          OUTPUT=$(sh -c "$COMMAND")
+          NETLIFY_OUTPUT=$(echo "$OUTPUT")
+          NETLIFY_PREVIEW_URL=$(echo "$OUTPUT" | grep -Eo '(http|https)://[a-zA-Z0-9./?=_-]*(--)[a-zA-Z0-9./?=_-]*')
+          NETLIFY_LOGS_URL=$(echo "$OUTPUT" | grep -Eo '(http|https)://app.netlify.com/[a-zA-Z0-9./?=_-]*')
+          echo "NETLIFY_PREVIEW_URL=$NETLIFY_PREVIEW_URL" >> $GITHUB_OUTPUT
+          echo "NETLIFY_LOGS_URL=$NETLIFY_LOGS_URL" >> $GITHUB_OUTPUT
+      - name: Update PR with preview URL
+        uses: thollander/actions-comment-pull-request@main
+        with:
+          message: |
+            Netlify Preview Deployment Information
+            - Log URL: ${{ steps.deploy.outputs.NETLIFY_LOGS_URL }}
+            - Preview URL: ${{ steps.deploy.outputs.NETLIFY_PREVIEW_URL }}
+              :rocket:
+          comment_tag: execution

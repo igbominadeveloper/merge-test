@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply flex h-12  w-full items-center justify-center gap-x-2 rounded-lg bg-primary-main font-semibold text-white;
+  }
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+  width: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Change autocomplete styles in WebKit */
+input:-webkit-autofill,
+select:-webkit-autofill:focus,
+select:-webkit-autofill,
+textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #212b36 !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  /* background-color: rgba(145, 158, 171, 0.08) !important; */
+  border-radius: 8px !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield; /* Firefox */
+  appearance: textfield;
+}
