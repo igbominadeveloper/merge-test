@@ -85,7 +85,10 @@ function ToKatsu() {
       return;
     }
 
-    if (accountBalance?.availableBalance && amountConverted > accountBalance?.availableBalance) {
+    if (
+      !accountBalance?.availableBalance ||
+      (accountBalance?.availableBalance && amountConverted > accountBalance?.availableBalance)
+    ) {
       setError('amount', { message: 'Insufficient balance' });
       return;
     }
