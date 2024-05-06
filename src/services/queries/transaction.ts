@@ -36,11 +36,11 @@ const mappedTransaction = (transaction: Transaction) => ({
   ...transaction,
   senderDetail: {
     ...transaction.senderDetail,
-    bankName: katsuMFB,
+    bankName: transaction?.senderDetail?.bankName ?? katsuMFB,
   },
   receiverDetail: {
     ...transaction.receiverDetail,
-    bankName: katsuMFB,
+    bankName: transaction?.receiverDetail?.bankName ?? katsuMFB,
   },
 });
 
