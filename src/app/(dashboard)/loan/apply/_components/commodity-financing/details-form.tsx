@@ -151,24 +151,6 @@ function CommodityFinancingApplicationForm({ onNext, defaultData, setData }: Pro
             />
           )}
 
-          {values.product.toLowerCase() === 'other' && (
-            <Controller
-              control={control}
-              name="otherProduct"
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  type="text"
-                  fullWidth
-                  isError={!!errors.otherProduct}
-                  label="Enter other product"
-                  variant="filled"
-                  errorMessage={errors?.otherProduct?.message || ''}
-                />
-              )}
-            />
-          )}
-
           <Controller
             control={control}
             name="productUnit"
