@@ -12,6 +12,10 @@ jobs:
     if: '!github.event.pull_request.draft'
     steps:
       - uses: actions/checkout@main
+      - name: Setup Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: '>=20.12.2'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path

@@ -17,8 +17,10 @@ jobs:
           # acting on a PR. Otherwise, `git log` will only contain the merge commit
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@main
+        with:
+          node-version: '>=20.12.2'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
