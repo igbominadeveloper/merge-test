@@ -55,12 +55,12 @@ function TransferWrapper() {
             </h4>
 
             <Stack direction="row" alignItems="center" gap="10px">
-              <Typography className="text-base text-secondary-400" component="h1">
+              <Typography className="font-primary text-base text-secondary-400" component="h1">
                 Available balance:
               </Typography>
               <Typography
                 component="p"
-                className="rounded-md bg-grey-400 px-[5px] py-1 font-bold text-gray-800"
+                className="bg-success-100 rounded-md px-[5px] py-1 font-primary font-bold text-gray-800"
               >
                 {formatAmount(accountBalance?.availableBalance)}
               </Typography>
