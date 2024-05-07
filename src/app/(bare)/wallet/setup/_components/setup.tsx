@@ -53,14 +53,13 @@ export default function AccountSetup() {
     virtualBankName: null,
   };
 
-  const walletActivated = !!wallet.userId;
-  const accountProvisioned = !!wallet.floatAccountNumber;
+  const walletActivated = !!wallet.floatAccountNumber;
 
   const fetchUserDataAtInterval = () => {
     clearInterval(fetchUserDataInterval);
 
     fetchUserDataInterval = window.setInterval(() => {
-      if (!accountProvisioned) {
+      if (!walletActivated) {
         refetch();
       } else {
         clearInterval(fetchUserDataInterval);
@@ -95,7 +94,7 @@ export default function AccountSetup() {
       return;
     }
 
-    if (business && walletActivated && !accountProvisioned) {
+    if (business && walletActivated) {
       fetchUserDataAtInterval();
     }
 
@@ -104,7 +103,7 @@ export default function AccountSetup() {
       clearTimeout(showWaitMessageTimeout);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [business, walletActivated, accountProvisioned]);
+  }, [business, walletActivated]);
 
   return (
     <div className="grid place-items-center gap-3">
@@ -112,7 +111,7 @@ export default function AccountSetup() {
 
       <p className="text-center text-2xl font-bold sm:text-3xl">Hi, {business?.name}</p>
 
-      {!accountProvisioned && (
+      {!walletActivated && (
         <>
           <p className="text-center text-sm text-secondary-400 sm:text-base">
             Give us a moment while we provision your bank account
@@ -123,7 +122,7 @@ export default function AccountSetup() {
         </>
       )}
 
-      {accountProvisioned && (
+      {walletActivated && (
         <p className="text-center text-sm text-secondary-400 sm:text-base">
           Here is your Katsu Account Details
         </p>
@@ -131,20 +130,20 @@ export default function AccountSetup() {
 
       <div className="mt-5 w-full rounded-2xl border border-dotted border-primary-main/60 bg-primary-main/10 p-5">
         <p className="mb-2 text-[18px] font-bold">Account Details</p>
-        <LineItem activated={accountProvisioned} title="Account Name" value={business?.name} />
+        <LineItem activated={walletActivated} title="Account Name" value={business?.name} />
         <LineItem
-          activated={accountProvisioned}
+          activated={walletActivated}
           title="Account Number"
           value={wallet.floatAccountNumber}
         />
         <LineItem
-          activated={accountProvisioned}
+          activated={walletActivated}
           title="Bank Name"
           value={wallet.virtualBankName ?? 'Wema Bank'}
         />
       </div>
 
-      {!accountProvisioned && (
+      {!walletActivated && (
         <p
           className={`mt-4 animate-pulse text-base text-secondary-400 transition-all duration-300 ${showWaitMessage ? 'visible opacity-100' : 'invisible opacity-0'}`}
         >
@@ -162,7 +161,7 @@ export default function AccountSetup() {
         />
       )}
 
-      {accountProvisioned && (
+      {walletActivated && (
         <>
           <p className="text-center text-sm text-secondary-400 sm:text-base">
             {`Now, let's set up your PIN`}
