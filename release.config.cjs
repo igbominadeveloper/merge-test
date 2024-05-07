@@ -4,7 +4,13 @@
 module.exports = {
   branches: ["main"],
   plugins: [
-    "@semantic-release/commit-analyzer",
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        preset: "angular",
+        releaseRules: ".release-rules.cjs",
+      },
+    ],
     "@semantic-release/release-notes-generator",
     [
       "@semantic-release/npm",
@@ -12,6 +18,11 @@ module.exports = {
         npmPublish: false,
       },
     ],
-    "@semantic-release/github",
+    [
+      "@semantic-release/github",
+      {
+        assets: [".next/**"],
+      },
+    ],
   ],
 };
