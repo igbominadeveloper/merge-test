@@ -84,6 +84,15 @@ const config: Config = {
       fontFamily: {
         primary: ['var(--primary)', ...fontFamily.sans],
       },
+      animation: {
+        'slide-up': 'slideup 0.5s',
+      },
+      keyframes: {
+        slideup: {
+          '0%': { transform: 'translateY(10px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+      },
     },
   },
   plugins: [require('tailwind-scrollbar-hide'), require('@tailwindcss/typography')],

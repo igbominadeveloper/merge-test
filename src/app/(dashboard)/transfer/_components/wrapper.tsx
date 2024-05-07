@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ButtonSwitch } from '@/shared/ButtonSwitch';
 import { useSearchParams } from 'next/navigation';
 import { Stack, Typography } from '@mui/material';
 import Image from 'next/image';
-import BankAd from '@/assets/bank-ad.jpeg';
+import BankAd from '@/assets/bank-ad.png';
 import {
   prefetchBankBeneficiaries,
   prefetchKatsuBeneficiaries,
@@ -22,12 +22,15 @@ const options: { label: string; value: ActiveType }[] = [
   { label: 'Transfer to Katsu', value: 'katsu' },
   { label: 'Transfer to Other Banks', value: 'others' },
 ];
+const brandTexts = ['Seamless', 'Secure'];
 
 function TransferWrapper() {
   const search = useSearchParams();
   const [activeType, setActiveType] = useState<ActiveType>(
     (search.get('tab') as ActiveType) || 'katsu',
   );
+  const [brandTextIndex, setBrandTextIndex] = useState(0);
+
   prefetchKatsuBeneficiaries();
   prefetchBankBeneficiaries();
   const { data: accountBalance } = useAccountBalance();
@@ -36,6 +39,14 @@ function TransferWrapper() {
     katsu: <ToKatsu />,
     others: <ToBank />,
   };
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setBrandTextIndex(prevIndex => (prevIndex === 0 ? 1 : 0));
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
@@ -70,13 +81,23 @@ function TransferWrapper() {
           {render[activeType]}
         </div>
 
-        <Image
-          className=" hidden w-1/2 rounded-xl md:block lg:w-[40%] xl:w-[44%] "
-          width={413}
-          height={600}
-          src={BankAd}
-          alt="ad image"
-        />
+        <div className="borded hidden w-1/2 justify-between rounded-2xl border-red-500 bg-grey-400 p-8 md:flex md:flex-col md:self-stretch lg:w-[40%] xl:w-[44%]">
+          <Stack direction="column">
+            <Typography className="text-xs font-bold tracking-[3px] text-grey-700">
+              ENJOY
+            </Typography>
+            <Typography
+              className="animate-slide-up text-2xl font-bold text-primary-main"
+              key={brandTextIndex}
+            >
+              {brandTexts[brandTextIndex]}
+            </Typography>
+            <Typography className="text-2xl font-bold">Transactions with Katsu</Typography>
+          </Stack>
+          <div className="self-stretch overflow-hidden rounded-xl">
+            <Image className="min-h-[520px] object-cover" src={BankAd} alt="ad image" />
+          </div>
+        </div>
       </div>
     </>
   );
