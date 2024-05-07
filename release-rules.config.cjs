@@ -1,2 +1,2 @@
 // File: config/release-rules.cjs
-module.exports = [{ type: "chore", scope: "README", release: "minor" }];
+module.exports = [{ type: "chore", release: "minor" }];
