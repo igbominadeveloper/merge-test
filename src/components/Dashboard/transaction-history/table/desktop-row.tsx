@@ -19,7 +19,7 @@ export default function Row(props: RowProps) {
   if (column.id) {
     let value = row[column.id];
 
-    // when the transaction type is showing 'All', the transactiontype filter === null
+    // when the transaction filter is on 'All', the transactiontype filter === null
     // we defaulted the value to 'receiverDetail' but to render the right value, we need to check the transactionstatus to know if it's a credit/debit and then we can check the right value
 
     if (column.id === 'receiverDetail' && transactionTypeFilter === null) {
