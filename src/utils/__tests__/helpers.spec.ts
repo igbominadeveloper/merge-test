@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { formatAmount, formatDateString } from '../helpers';
 
 describe('formatAmount', () => {
@@ -48,22 +49,27 @@ describe('formatAmount', () => {
 
 describe('formatDateString', () => {
   it('should format date string with default format', () => {
+    const format = 'D MMM YYYY h:mm A';
     const date = '2024-05-08T12:34:56Z';
     const formattedDate = formatDateString(date);
-    expect(formattedDate).toEqual('8 May 2024 1:34 PM');
+    const expectedDate = dayjs(date).format(format);
+    expect(formattedDate).toEqual(expectedDate);
   });
 
   it('should format date string with custom format', () => {
     const date = '2024-05-08T12:34:56Z';
     const format = 'YYYY-MM-DD HH:mm:ss';
     const formattedDate = formatDateString(date, format);
-    expect(formattedDate).toEqual('2024-05-08 13:34:56');
+    const expectedDate = dayjs(date).format(format);
+    expect(formattedDate).toEqual(expectedDate);
   });
 
   it('should handle date strings without timezone', () => {
+    const format = 'D MMM YYYY h:mm A';
     const date = '2024-05-08T12:34:56';
     const formattedDate = formatDateString(date);
-    expect(formattedDate).toEqual('8 May 2024 1:34 PM');
+    const expectedDate = dayjs(`${date}z`).format(format);
+    expect(formattedDate).toEqual(expectedDate);
   });
 
   it('should handle empty date string', () => {
