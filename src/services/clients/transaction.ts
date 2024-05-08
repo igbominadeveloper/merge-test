@@ -21,6 +21,8 @@ const emptyTransactionResponse: AllTransactions = {
   totalPages: 0,
 };
 
+const filterByStatuses = 'filterByStatuses=PENDING,APPROVED,REVERSED';
+
 export const fetchRecentTransactions = async () => {
   try {
     const { data } = await apiHandler.get<APIResponse<RecentTransactions>>(
@@ -34,16 +36,11 @@ export const fetchRecentTransactions = async () => {
 
 export const fetchAllTransactions = async (query?: string) => {
   try {
+    const queryString = query ? `${query}&${filterByStatuses}` : filterByStatuses;
     const { data } = await apiHandler.get<APIResponse<AllTransactions>>(
-      `${TransactionRoute.allWalletTransactions}${query ? `?${query}` : ''}`,
+      `${TransactionRoute.allWalletTransactions}?${queryString}`,
     );
-    return {
-      ...data.data,
-      results: data.data.results.filter(
-        // TODO remove this filter once BE stops sending rejected transactions
-        transaction => transaction.transactionStatus !== 'REJECTED',
-      ),
-    };
+    return data.data;
   } catch (error) {
     return emptyTransactionResponse;
   }
@@ -60,7 +57,7 @@ export const fetchTransaction = async (transactionId: string) => {
 export const fetchMetrics = async (dateFrom: string, dateTo: string) => {
   try {
     const { data } = await apiHandler.get<APIResponse<MetricsResponse>>(
-      `${TransactionRoute.transactionMetrics(dateFrom, dateTo)}`,
+      `${TransactionRoute.transactionMetrics(dateFrom, dateTo)}&${filterByStatuses}`,
     );
 
     return data.data.data;
