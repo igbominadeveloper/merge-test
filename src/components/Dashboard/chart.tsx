@@ -2,7 +2,7 @@
 
 import { useTransactionMetrics } from '@/services/queries/transaction';
 import { loadingChartData } from '@/utils/dashboardItems';
-import { formatDateInYears, formatDateInDays, formatAmount } from '@/utils/helpers';
+import { formatAmount, formatDateString } from '@/utils/helpers';
 import {
   Area,
   AreaChart,
@@ -20,12 +20,12 @@ function Chart({ className = '' }: { className?: string }) {
   sevenDaysAgo.setDate(today.getDate() - 7);
 
   const { data } = useTransactionMetrics(
-    formatDateInYears(sevenDaysAgo.toString()),
-    formatDateInYears(today.toString()),
+    formatDateString(sevenDaysAgo.toString(), 'YYYY-MM-DD'),
+    formatDateString(today.toString(), 'YYYY-MM-DD'),
   );
 
   const chartData = data?.map(item => ({
-    day: formatDateInDays(item.day),
+    day: formatDateString(item.day, 'dddd'),
     amount: item.totalAmount,
     type: item.type,
   }));
@@ -92,6 +92,7 @@ function Chart({ className = '' }: { className?: string }) {
             dataKey="inflow"
             stroke="#1977F2"
             fillOpacity={0.3}
+            strokeWidth={2.5}
             fill="url(#colorUv)"
           />
           <Area
@@ -99,6 +100,7 @@ function Chart({ className = '' }: { className?: string }) {
             dataKey="outflow"
             stroke="#FFAB00"
             fillOpacity={0.3}
+            strokeWidth={2.5}
             fill="url(#colorPv)"
           />
         </AreaChart>
