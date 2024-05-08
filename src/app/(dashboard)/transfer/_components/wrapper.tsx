@@ -71,7 +71,7 @@ function TransferWrapper() {
               </Typography>
               <Typography
                 component="p"
-                className="bg-success-100 rounded-md px-[5px] py-1 font-primary font-bold text-gray-800"
+                className="rounded-md bg-success-100 px-[5px] py-1 font-primary font-bold text-gray-800"
               >
                 {formatAmount(accountBalance?.availableBalance)}
               </Typography>

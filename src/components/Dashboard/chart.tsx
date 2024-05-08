@@ -27,6 +27,7 @@ function Chart({ className = '' }: { className?: string }) {
   const chartData = data?.map(item => ({
     day: formatDateInDays(item.day),
     amount: item.totalAmount,
+    type: item.type,
   }));
 
   chartData?.forEach(chart => {
@@ -34,7 +35,8 @@ function Chart({ className = '' }: { className?: string }) {
       defaultItem => defaultItem.day.toLowerCase() === chart.day.toLowerCase(),
     );
     if (index !== -1) {
-      loadingChartData[index].amount = chart.amount;
+      const flow = chart.type === 'CREDIT' ? 'inflow' : 'outflow';
+      loadingChartData[index][flow] = chart.amount;
     }
   });
 
@@ -74,20 +76,20 @@ function Chart({ className = '' }: { className?: string }) {
             />
           </YAxis>
           <Tooltip formatter={value => formatAmount(Number(value))} />
-          <Legend
-            formatter={value => value.charAt(0).toUpperCase() + value.slice(1)}
-            verticalAlign="top"
-            align="right"
-            iconType="circle"
-            iconSize={8}
-            height={36}
+          <Legend verticalAlign="top" align="right" iconType="circle" iconSize={8} height={36} />
+          <Area
+            type="monotone"
+            dataKey="inflow"
+            stroke="#1977F2"
+            fillOpacity={0.3}
+            fill="url(#colorUv)"
           />
           <Area
             type="monotone"
-            dataKey="amount"
-            stroke="#1977F2"
-            fillOpacity={1}
-            fill="url(#colorUv)"
+            dataKey="outflow"
+            stroke="#FFAB00"
+            fillOpacity={0.3}
+            fill="url(#colorPv)"
           />
         </AreaChart>
       </ResponsiveContainer>

@@ -37,7 +37,13 @@ export const fetchAllTransactions = async (query?: string) => {
     const { data } = await apiHandler.get<APIResponse<AllTransactions>>(
       `${TransactionRoute.allWalletTransactions}${query ? `?${query}` : ''}`,
     );
-    return data.data;
+    return {
+      ...data.data,
+      results: data.data.results.filter(
+        // TODO remove this filter once BE stops sending rejected transactions
+        transaction => transaction.transactionStatus !== 'REJECTED',
+      ),
+    };
   } catch (error) {
     return emptyTransactionResponse;
   }
@@ -52,11 +58,15 @@ export const fetchTransaction = async (transactionId: string) => {
 };
 
 export const fetchMetrics = async (dateFrom: string, dateTo: string) => {
-  const { data } = await apiHandler.get<APIResponse<MetricsResponse>>(
-    `${TransactionRoute.transactionMetrics(dateFrom, dateTo)}`,
-  );
+  try {
+    const { data } = await apiHandler.get<APIResponse<MetricsResponse>>(
+      `${TransactionRoute.transactionMetrics(dateFrom, dateTo)}`,
+    );
 
-  return data.data.data;
+    return data.data.data;
+  } catch (error) {
+    return [];
+  }
 };
 
 export const generateReceipt = async (transaction: Transaction) => {
