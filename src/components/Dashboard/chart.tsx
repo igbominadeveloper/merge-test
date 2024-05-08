@@ -75,8 +75,18 @@ function Chart({ className = '' }: { className?: string }) {
               position="insideBottom"
             />
           </YAxis>
-          <Tooltip formatter={value => formatAmount(Number(value))} />
-          <Legend verticalAlign="top" align="right" iconType="circle" iconSize={8} height={36} />
+          <Tooltip
+            formatter={value => formatAmount(Number(value))}
+            itemStyle={{ textTransform: 'capitalize' }}
+          />
+          <Legend
+            verticalAlign="top"
+            align="right"
+            iconType="circle"
+            iconSize={8}
+            height={36}
+            formatter={value => value.charAt(0).toUpperCase() + value.slice(1)}
+          />
           <Area
             type="monotone"
             dataKey="inflow"
