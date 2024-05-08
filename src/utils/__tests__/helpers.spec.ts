@@ -1,4 +1,4 @@
-import { formatAmount } from '../helpers';
+import { formatAmount, formatDateString } from '../helpers';
 
 describe('formatAmount', () => {
   test('formats amount correctly', () => {
@@ -43,5 +43,37 @@ describe('formatAmount', () => {
   test('returns 0 if the amount is NaN', () => {
     const formattedAmount = formatAmount(NaN as unknown as number);
     expect(formattedAmount).toBe('₦0.00');
+  });
+});
+
+describe('formatDateString', () => {
+  it('should format date string with default format', () => {
+    const date = '2024-05-08T12:34:56Z';
+    const formattedDate = formatDateString(date);
+    expect(formattedDate).toEqual('8 May 2024 1:34 PM');
+  });
+
+  it('should format date string with custom format', () => {
+    const date = '2024-05-08T12:34:56Z';
+    const format = 'YYYY-MM-DD HH:mm:ss';
+    const formattedDate = formatDateString(date, format);
+    expect(formattedDate).toEqual('2024-05-08 13:34:56');
+  });
+
+  it('should handle date strings without timezone', () => {
+    const date = '2024-05-08T12:34:56';
+    const formattedDate = formatDateString(date);
+    expect(formattedDate).toEqual('8 May 2024 1:34 PM');
+  });
+
+  it('should handle empty date string', () => {
+    const formattedDate = formatDateString('');
+    expect(formattedDate).toEqual('Invalid Date');
+  });
+
+  it('should handle invalid date string', () => {
+    const date = 'invalid date';
+    const formattedDate = formatDateString(date);
+    expect(formattedDate).toEqual('Invalid Date');
   });
 });
