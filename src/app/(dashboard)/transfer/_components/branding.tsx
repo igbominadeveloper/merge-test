@@ -18,8 +18,6 @@ export default function Branding() {
     return () => clearTimeout(timeout);
   }, [brandTexts]);
 
-  console.log(brandTexts);
-
   return (
     <div className="gap-5 p-8 md:flex md:flex-col md:self-center">
       <Stack direction="column">
