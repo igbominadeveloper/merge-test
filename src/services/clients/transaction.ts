@@ -26,7 +26,7 @@ const filterByStatuses = 'filterByStatuses=PENDING,APPROVED,REVERSED';
 export const fetchRecentTransactions = async () => {
   try {
     const { data } = await apiHandler.get<APIResponse<RecentTransactions>>(
-      `${TransactionRoute.recentTransactions}`,
+      `${TransactionRoute.recentTransactions}?${filterByStatuses}`,
     );
     return data.data?.results ?? [];
   } catch (error) {
