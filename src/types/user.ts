@@ -1,6 +1,12 @@
 import { z } from 'zod';
 
-export const BusinessTypeEnum = z.enum(['Sole Proprietor', 'Limited Liability']);
+export const BusinessTypeEnum = z.enum([
+  'Sole Proprietor',
+  'Limited Liability',
+  'Incorporated Trustee',
+  'Partnership',
+]);
+
 export type BusinessType = z.infer<typeof BusinessTypeEnum>;
 export const BusinessCategoryEnum = z.enum(['REGISTERED_BUSINESS', 'REGISTERED_COMPANY']);
 export type BusinessCategory = z.infer<typeof BusinessCategoryEnum>;
