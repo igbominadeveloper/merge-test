@@ -85,7 +85,7 @@ const config: Config = {
         primary: ['var(--primary)', ...fontFamily.sans],
       },
       animation: {
-        'slide-up': 'slideup 0.5s',
+        'slide-up': 'slideup 0.7s linear alternate',
       },
       keyframes: {
         slideup: {
