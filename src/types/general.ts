@@ -29,3 +29,5 @@ export interface APIResponse<T> {
   supportDescriptiveMessage: string;
   traceId: string;
 }
+
+export type TypeOrNull<T> = T | null;
