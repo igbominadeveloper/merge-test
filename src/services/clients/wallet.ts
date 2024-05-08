@@ -11,7 +11,7 @@ export const activateWallet = async (businessId: string) => {
   return data.data;
 };
 
-interface AccountBalance {
+export interface AccountBalance {
   availableBalance: number;
   balance: number;
 }

@@ -3,17 +3,16 @@
 import { useState } from 'react';
 import { ButtonSwitch } from '@/shared/ButtonSwitch';
 import { useSearchParams } from 'next/navigation';
-import { Stack, Typography } from '@mui/material';
-import Image from 'next/image';
-import BankAd from '@/assets/bank-ad.jpeg';
+import { Stack } from '@mui/material';
 import {
   prefetchBankBeneficiaries,
   prefetchKatsuBeneficiaries,
   useAccountBalance,
 } from '@/services/queries/wallet';
-import { formatAmount } from '@/utils/helpers';
+import AvailableBalance from './available-balance';
 import ToBank from './to-banks';
 import ToKatsu from './to-katsu';
+import Branding from './branding';
 import { TransferType } from './types';
 
 type ActiveType = TransferType;
@@ -28,6 +27,7 @@ function TransferWrapper() {
   const [activeType, setActiveType] = useState<ActiveType>(
     (search.get('tab') as ActiveType) || 'katsu',
   );
+
   prefetchKatsuBeneficiaries();
   prefetchBankBeneficiaries();
   const { data: accountBalance } = useAccountBalance();
@@ -54,29 +54,15 @@ function TransferWrapper() {
               Transfer to {activeType === 'katsu' ? 'Katsu' : 'Other Banks'}
             </h4>
 
-            <Stack direction="row" alignItems="center" gap="10px">
-              <Typography className="text-base text-secondary-400" component="h1">
-                Available balance:
-              </Typography>
-              <Typography
-                component="p"
-                className="rounded-md bg-grey-400 px-[5px] py-1 font-bold text-gray-800"
-              >
-                {formatAmount(accountBalance?.availableBalance)}
-              </Typography>
-            </Stack>
+            <AvailableBalance accountBalance={accountBalance} />
           </Stack>
 
           {render[activeType]}
         </div>
 
-        <Image
-          className=" hidden w-1/2 rounded-xl md:block lg:w-[40%] xl:w-[44%] "
-          width={413}
-          height={600}
-          src={BankAd}
-          alt="ad image"
-        />
+        <div className="borded hidden w-1/2 justify-between rounded-2xl border-red-500 bg-grey-400 p-8 md:flex md:flex-col md:self-stretch lg:w-[40%] xl:w-[44%]">
+          <Branding />
+        </div>
       </div>
     </>
   );
