@@ -84,7 +84,7 @@ function UssdIndex({ onNext, handleUssdData, banks, isBankLoading }: IUssdIndex)
   };
 
   return (
-    <div>
+    <>
       <div>
         <h3 className="mb-1 text-xl font-semibold sm:text-2xl">Fund with USSD</h3>
         <p className="text-sm text-secondary-400">
@@ -151,7 +151,7 @@ function UssdIndex({ onNext, handleUssdData, banks, isBankLoading }: IUssdIndex)
           disabled={!isValid || !isDirty}
         />
       </form>
-    </div>
+    </>
   );
 }
 export default UssdIndex;

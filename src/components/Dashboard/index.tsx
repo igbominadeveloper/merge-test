@@ -5,7 +5,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { TRANSACTION_ICONS, quickActionsItems } from '@/utils/dashboardItems';
-import AdImage from '@/assets/ad-image.png';
+import DashboardAd from '@/assets/dashboard-ad.png';
 import ModalComponent from '@/shared/Modal';
 import Button from '@/shared/Form/FormSubcomponent/Button';
 import { PillTextIcon } from '@/components/Dashboard/PillTextIcon';
@@ -73,22 +73,8 @@ export default function Dashboard() {
         </div>
       </div>
       <TransactionOverview />
-      <div className="flex h-[133px] w-full justify-between overflow-hidden rounded-lg bg-[#f9f9f9] md:h-[158px]">
-        <div className="ml-[16px] pt-[14px] md:ml-[50px] md:pt-[17px]">
-          <h4 className="mb-1 text-[12px] font-bold leading-none text-[#F57E20]">April 24, 2020</h4>
-          <h4 className="mb-1 max-w-[176px] text-[12px] font-semibold leading-[22px] md:mb-2 md:text-xs">
-            High Value Loan Club Felicitation Ceremony
-          </h4>
-          <div className="grid gap-1">
-            <p className="text-[10px] leading-none text-[#555]">9.00 AM IST - 5.30 PM IST</p>
-            <p className="text-[10px] leading-none text-[#555]">Mumbai</p>
-            <p className="text-[10px] leading-none text-[#555]">Meeting Room no. 5</p>
-          </div>
-        </div>
-        <div className="relative w-fit">
-          <div className="absolute -top-9 left-1 h-[220px] w-3 rotate-[15deg] transform bg-[#A4C519] md:left-14 md:rotate-[35.5deg]" />
-          <Image className="h-full w-[141px] md:w-[462px]" src={AdImage} alt="ad image" />
-        </div>
+      <div className="flex h-[133px] w-full overflow-hidden rounded-lg md:h-[158px]">
+        <Image className="h-full w-full" src={DashboardAd} alt="ad image" />
       </div>
       {showAccountDetails && (
         <ModalComponent

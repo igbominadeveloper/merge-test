@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { ButtonSwitch } from '@/shared/ButtonSwitch';
 import { useSearchParams } from 'next/navigation';
 import { useBanksUSSD } from '@/services/queries/bank';
+import FundingAd from '@/assets/funding-ad.png';
 import BankTransfer from './bank-transfer';
 import FundWithUssd from './fund-ussd';
 
@@ -36,7 +38,12 @@ function Wrapper() {
         className="max-w-[500px]"
       />
 
-      <div className="mt-6 rounded-2xl bg-white p-5 sm:p-10">{render[activeType]}</div>
+      <div className="mt-6 flex items-center justify-between gap-[50px] rounded-2xl bg-white p-5 sm:p-10">
+        <div className="flex-1">{render[activeType]}</div>
+        <div className="h-full max-h-[330px] max-w-[480px] flex-1 object-cover">
+          <Image className="h-full w-full" alt="funding-ad" src={FundingAd} />
+        </div>
+      </div>
     </>
   );
 }

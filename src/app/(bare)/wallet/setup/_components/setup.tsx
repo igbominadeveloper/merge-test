@@ -117,7 +117,7 @@ export default function AccountSetup() {
             Give us a moment while we provision your bank account
           </p>
           <p className="text-center text-sm text-secondary-400 sm:text-base">
-            Your account details will be showed below
+            Your account details will be shown below
           </p>
         </>
       )}

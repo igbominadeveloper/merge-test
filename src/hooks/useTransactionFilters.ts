@@ -2,8 +2,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { TransactionCategory, TransactionType } from '@/types/transaction';
-
-type TypeOrNull<T> = T | null;
+import { TypeOrNull } from '@/types/general';
 
 export function useTransactionFilters() {
   const searchParams = useSearchParams();

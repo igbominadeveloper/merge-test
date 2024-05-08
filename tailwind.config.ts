@@ -46,6 +46,7 @@ const config: Config = {
         },
         success: {
           main: '#118D57',
+          100: '#D3FCD2',
           300: '#047159',
           400: 'hsla(142, 71%, 45%, 0.16)',
           500: '#22C55E29',
@@ -82,6 +83,15 @@ const config: Config = {
       },
       fontFamily: {
         primary: ['var(--primary)', ...fontFamily.sans],
+      },
+      animation: {
+        'slide-up': 'slideup 0.7s linear alternate',
+      },
+      keyframes: {
+        slideup: {
+          '0%': { transform: 'translateY(10px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
       },
     },
   },

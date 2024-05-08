@@ -10,6 +10,7 @@ export const inputLabelOptions: InputLabelProps = {
     fontSize: '14px',
     lineHeight: '25px',
     color: '#5C6F7F',
+    fontFamily: 'var(--primary)',
   },
 };
 
@@ -55,6 +56,7 @@ const TextInput = styled(
     borderColor: '#E0E3E7',
     backgroundColor: 'rgba(145, 158, 171, 0.08)',
     transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
+    fontFamily: 'var(--primary)',
   },
 
   '& .Mui-error ': {
