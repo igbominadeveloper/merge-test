@@ -21,10 +21,12 @@ const emptyTransactionResponse: AllTransactions = {
   totalPages: 0,
 };
 
+const filterByStatuses = 'filterByStatuses=PENDING,APPROVED,REVERSED';
+
 export const fetchRecentTransactions = async () => {
   try {
     const { data } = await apiHandler.get<APIResponse<RecentTransactions>>(
-      `${TransactionRoute.recentTransactions}`,
+      `${TransactionRoute.recentTransactions}?${filterByStatuses}`,
     );
     return data.data?.results ?? [];
   } catch (error) {
@@ -34,8 +36,9 @@ export const fetchRecentTransactions = async () => {
 
 export const fetchAllTransactions = async (query?: string) => {
   try {
+    const queryString = query ? `${query}&${filterByStatuses}` : filterByStatuses;
     const { data } = await apiHandler.get<APIResponse<AllTransactions>>(
-      `${TransactionRoute.allWalletTransactions}${query ? `?${query}` : ''}`,
+      `${TransactionRoute.allWalletTransactions}?${queryString}`,
     );
     return data.data;
   } catch (error) {
@@ -52,11 +55,15 @@ export const fetchTransaction = async (transactionId: string) => {
 };
 
 export const fetchMetrics = async (dateFrom: string, dateTo: string) => {
-  const { data } = await apiHandler.get<APIResponse<MetricsResponse>>(
-    `${TransactionRoute.transactionMetrics(dateFrom, dateTo)}`,
-  );
+  try {
+    const { data } = await apiHandler.get<APIResponse<MetricsResponse>>(
+      `${TransactionRoute.transactionMetrics(dateFrom, dateTo)}&${filterByStatuses}`,
+    );
 
-  return data.data.data;
+    return data.data.data;
+  } catch (error) {
+    return [];
+  }
 };
 
 export const generateReceipt = async (transaction: Transaction) => {

@@ -44,31 +44,38 @@ export const transactionListItems: {
 export const loadingChartData = [
   {
     day: 'Monday',
-    amount: 0,
+    inflow: 0,
+    outflow: 0,
   },
   {
     day: 'Tuesday',
-    amount: 0,
+    inflow: 0,
+    outflow: 0,
   },
   {
     day: 'Wednesday',
-    amount: 0,
+    inflow: 0,
+    outflow: 0,
   },
   {
     day: 'Thursday',
-    amount: 0,
+    inflow: 0,
+    outflow: 0,
   },
   {
     day: 'Friday',
-    amount: 0,
+    inflow: 0,
+    outflow: 0,
   },
   {
     day: 'Saturday',
-    amount: 0,
+    inflow: 0,
+    outflow: 0,
   },
   {
     day: 'Sunday',
-    amount: 0,
+    inflow: 0,
+    outflow: 0,
   },
 ];
 

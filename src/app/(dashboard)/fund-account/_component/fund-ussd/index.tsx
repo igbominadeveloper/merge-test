@@ -39,7 +39,7 @@ function FundWithUssd({
     ),
   };
 
-  return <div className="w-full max-w-[553px]">{render[currentStage]}</div>;
+  return <div className="w-full">{render[currentStage]}</div>;
 }
 
 export default FundWithUssd;

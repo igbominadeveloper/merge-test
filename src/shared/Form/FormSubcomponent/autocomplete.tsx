@@ -35,7 +35,7 @@ const ListboxComponent = React.forwardRef<HTMLDivElement, ListboxComponentProps>
             if (isValidElement(items[index])) {
               return React.cloneElement(items[index], {
                 style,
-                className: 'hover:bg-grey-100 cursor-pointer p-2 px-3',
+                className: 'hover:bg-grey-100 cursor-pointer p-2 px-3 font-primary',
               });
             }
             return null;

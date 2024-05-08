@@ -143,6 +143,7 @@ export interface Metrics {
   totalAmount: number;
   volume: string;
   id: string;
+  type: TransactionType;
 }
 
 export interface MetricsResponse {

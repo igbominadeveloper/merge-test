@@ -144,7 +144,12 @@ export default function TransactionTable() {
         onRowsPerPageChange={perPage => setPageSize(perPage)}
       >
         {(row, column) => (
-          <DesktopRow onRowClick={showTransactionDetails} column={column} row={row} />
+          <DesktopRow
+            onRowClick={showTransactionDetails}
+            column={column}
+            row={row}
+            transactionTypeFilter={transactionType}
+          />
         )}
       </DesktopTable>
     </>

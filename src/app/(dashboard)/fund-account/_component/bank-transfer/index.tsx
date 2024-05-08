@@ -28,7 +28,7 @@ function BankTransfer() {
   };
 
   return (
-    <div className="flex w-full max-w-[480px] flex-col space-y-6">
+    <div className="flex w-full flex-col space-y-6">
       <div>
         <h3 className="mb-1 text-xl font-semibold sm:text-2xl">Bank Transfer</h3>
         <p className="text-sm text-secondary-400">

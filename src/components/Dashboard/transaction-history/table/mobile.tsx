@@ -2,7 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
-import { Transaction } from '@/types/transaction';
+import { Transaction, TransactionType, TransactionTypeEnum } from '@/types/transaction';
 import { formatAmount, toUrlQuery } from '@/utils/helpers';
 import Filters from '@/components/Dashboard/transaction-history/table/filters';
 import MobileTable from '@/components/table/mobile';
@@ -11,6 +11,7 @@ import { useTransactionFilters } from '@/hooks/useTransactionFilters';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/utils/routes';
 import { useAllTransactions } from '@/services/queries/transaction';
+import { TypeOrNull } from '@/types/general';
 
 dayjs.extend(localizedFormat);
 
@@ -20,9 +21,21 @@ function formatDateString(date: string | Date): string {
 
 interface RowProps {
   transaction: Transaction;
+  transactionType: TypeOrNull<TransactionType>;
   onRowClick: (id: string) => void;
 }
-function Row({ transaction, onRowClick }: RowProps) {
+function Row({ transaction, transactionType, onRowClick }: RowProps) {
+  const getRecipientAccountName = () => {
+    if (transactionType === null) {
+      const isCredit = transaction.transactionType === TransactionTypeEnum.CREDIT;
+
+      if (isCredit) {
+        // the value to display is the sender
+        return transaction?.senderDetail?.accountName;
+      }
+      return transaction?.receiverDetail?.accountName;
+    }
+  };
   return (
     <div
       onClick={() => onRowClick(transaction?.transactionId)}
@@ -39,7 +52,7 @@ function Row({ transaction, onRowClick }: RowProps) {
       </div>
 
       <div className="flex flex-1 flex-col">
-        <p className="text-sm font-semibold">{transaction?.receiverDetail?.accountName}</p>
+        <p className="text-sm font-semibold">{getRecipientAccountName()}</p>
         <p className="text-[12px] leading-6 text-gray-500">
           {formatDateString(transaction.createdDate)}
         </p>
@@ -119,6 +132,7 @@ export default function TransactionTable() {
             key={rowKey}
             onRowClick={() => showTransactionDetails(row.transactionId)}
             transaction={row}
+            transactionType={transactionType}
           />
         )}
       </MobileTable>
