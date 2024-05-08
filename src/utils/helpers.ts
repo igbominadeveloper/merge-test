@@ -44,7 +44,8 @@ export const amountToWords = (amount: number) => {
 };
 
 export const formatDateString = (date: string, format = 'D MMM YYYY h:mm A'): string => {
-  return dayjs(date).format(format);
+  const dateWithTimezone = date?.toLowerCase()?.endsWith('z') ? date : `${date}z`;
+  return dayjs(dateWithTimezone).format(format);
 };
 
 export const extractDateFromDayjs = (date: dayjs.Dayjs | null) =>
@@ -73,14 +74,6 @@ export const trimText = (text: string, maxLength: number): string => {
     return text;
   }
   return `${text.substring(0, maxLength - 3)}...`;
-};
-
-export const formatDateInYears = (date: string, format = 'YYYY-MM-DD'): string => {
-  return dayjs(date).format(format);
-};
-
-export const formatDateInDays = (date: string, format = 'dddd'): string => {
-  return dayjs(date).format(format);
 };
 
 export const toTitleCase = (str: string): string => {
