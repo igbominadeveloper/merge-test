@@ -1,14 +1,16 @@
 'use client';
 
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import { useUserProfile } from '@/services/queries/user';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useUserProfile } from '@/services/queries/user';
 import { activateWallet } from '@/services/clients/wallet';
 import getErrorMessage from '@/utils/getErrorMessage';
 import { useNotification } from '@/shared/Notification';
 import { Wallet } from '@/types/user';
 import Button from '@/shared/Form/Button';
 import { Spinner } from '@/components/icons';
+import ErrorIcon from '@/assets/icons/error.svg';
 import WalletActivated from './wallet-activated';
 import AccountDetails from './account-details';
 
@@ -94,7 +96,11 @@ export default function AccountSetup() {
 
   return (
     <div className="grid place-items-center gap-3">
-      <AccountBalanceWalletIcon className="size-24 text-primary-main" />
+      {setupFailed ? (
+        <Image alt="warning-icon" src={ErrorIcon} className="h-20 w-20" />
+      ) : (
+        <AccountBalanceWalletIcon className="size-24 text-primary-main" />
+      )}
 
       <p className="text-center text-2xl font-bold sm:text-3xl">Hi, {business?.name}</p>
 
