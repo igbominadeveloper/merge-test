@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: 'katsu',
-  url: 'https://https://app.katsumfb.com',
-  ogImage: '/image/dashboard-ad.png',
+  url: 'https://app.katsumfb.com',
+  ogImage: 'https://deploy-preview-202--katsu-web.netlify.app/image/og-image.png',
   description: 'Katsu MFB',
   links: {
     twitter: '',

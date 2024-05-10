@@ -5,6 +5,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { TRANSACTION_ICONS, quickActionsItems } from '@/utils/dashboardItems';
+import DashboardAd from '@/assets/dashboard-ad.png';
 import ModalComponent from '@/shared/Modal';
 import Button from '@/shared/Form/FormSubcomponent/Button';
 import { PillTextIcon } from '@/components/Dashboard/PillTextIcon';
@@ -15,7 +16,6 @@ import TransactionOverview from './TxnSectionViews';
 import AccountVerification from './AccountVerification';
 import PageTitle from './PageTitle';
 import Balance from './balance';
-import DashboardAd from '../../../public/image/dashboard-ad.png';
 
 export default function Dashboard() {
   const [showAccountDetails, setShowAccountDetails] = useState(false);
