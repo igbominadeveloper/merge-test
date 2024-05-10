@@ -69,16 +69,13 @@ const TextInput = styled(
     backgroundColor: 'transparent',
     color: '#FF5630',
   },
-
-  '& input:disabled': {
+  '& .MuiFilledInput-root.Mui-disabled': {
     backgroundColor: '#f6f7f8',
-    borderRadius: 8,
-    webkitTextFillColor: '#333 !important',
-    opacity: '0.8 !important',
+    opacity: 1,
   },
-  '& .Mui-disabled': {
-    opacity: '1 !important',
-    color: '#5C6F7F !important',
+
+  '& .MuiFilledInput-root.Mui-disabled input': {
+    color: '#212B36 !important',
   },
 }));
 
