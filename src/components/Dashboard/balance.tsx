@@ -1,16 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useAccountBalance } from '@/services/queries/wallet';
-import { formatAmount } from '@/utils/helpers';
 import { Skeleton } from '@mui/material';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import { useAccountBalance } from '@/services/queries/wallet';
+import { formatAmount } from '@/utils/helpers';
 
 function Balance() {
-  const { data: balance, isLoading } = useAccountBalance();
+  const { data: balance, isLoading, isFetching, refetch } = useAccountBalance();
   const [showBalance, setShowBalance] = useState(true);
-
   const [currentBalance, setCurrentBalance] = useState(0);
 
   useEffect(() => {
@@ -32,8 +32,16 @@ function Balance() {
 
   return (
     <div className="relative col-span-3 w-full flex-shrink-0 overflow-hidden rounded-2xl border-2 bg-gradient-to-l from-[#2C3A42] via-[rgb(54,111,184)] to-[#2C3A42] text-white">
-      <div className="p-6">
-        <p className="font-medium">Account Balance</p>
+      <div className="flex h-full flex-col justify-between p-6">
+        <div className="flex items-center justify-between">
+          <p className="font-medium">Account Balance</p>
+          <div
+            className="flex cursor-pointer items-center gap-1 text-white"
+            onClick={() => refetch()}
+          >
+            <RefreshIcon className={`h-5 w-5 font-bold ${isFetching && 'animate-spin'}`} /> Refresh
+          </div>
+        </div>
         <div
           className="mt-1 flex cursor-pointer items-center justify-between"
           onClick={() => setShowBalance(!showBalance)}
