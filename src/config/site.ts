@@ -1,8 +1,8 @@
 export const siteConfig = {
-  name: 'katsu',
+  name: 'Katsu MFB',
   url: 'https://app.katsumfb.com',
   ogImage: 'https://deploy-preview-202--katsu-web.netlify.app/image/og-image.png',
-  description: 'Katsu MFB',
+  description: 'Katsu Microfinance Bank',
   links: {
     twitter: '',
   },
