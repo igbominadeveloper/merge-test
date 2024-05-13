@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import DatePickerInput from '@/shared/Form/DatepickerInput';
 import TextInput from '@/shared/Form/TextInput';
 import { Controller, useForm } from 'react-hook-form';
+import BasicPasswordInput from '@/shared/Form/BasicPasswordInput';
 import { useUserProfile } from '@/services/queries/user';
 import { ProfileDetailSchemaType } from '../../_validations/schema';
 
@@ -27,7 +28,7 @@ function ProfileDetails() {
 
   return (
     <div className="grid gap-x-5 gap-y-5 sm:grid-cols-2">
-      <h3 className="flex-shrink-0 text-[20px] font-medium  sm:text-xl">
+      <h3 className="flex-shrink-0 text-[20px] font-medium sm:text-xl">
         Primary Contact Information
       </h3>
 
@@ -68,18 +69,9 @@ function ProfileDetails() {
 
         <Controller
           control={control}
+          disabled
           name="bvn"
-          render={({ field }) => (
-            <TextInput
-              {...field}
-              fullWidth
-              value={field.value ? field.value : ''}
-              label="BVN"
-              isError={!!errors.bvn}
-              errorMessage={errors.bvn?.message}
-              disabled
-            />
-          )}
+          render={({ field }) => <BasicPasswordInput {...field} fullWidth label="BVN" />}
         />
 
         <Controller

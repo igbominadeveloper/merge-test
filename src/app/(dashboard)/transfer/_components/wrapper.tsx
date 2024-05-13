@@ -60,7 +60,7 @@ function TransferWrapper() {
           {render[activeType]}
         </div>
 
-        <div className="borded hidden w-1/2 justify-between rounded-2xl border-red-500 bg-grey-400 p-8 md:flex md:flex-col md:self-stretch lg:w-[40%] xl:w-[44%]">
+        <div className="borded hidden w-1/2 rounded-2xl bg-grey-400 lg:block lg:w-[40%] xl:w-[44%]">
           <Branding />
         </div>
       </div>

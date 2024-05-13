@@ -57,7 +57,7 @@ function PasswordWithChecks(props: PasswordWithChecksType) {
 
   return (
     <div>
-      <BasicPasswordInput sx={{}} value={value} label={label} error={isError} {...props} />
+      <BasicPasswordInput value={value} label={label} error={isError} {...props} />
       <div className="mt-2 flex flex-wrap gap-x-2 gap-y-4 font-primary">
         {passwordInputs.map(input => (
           <PasswordCheckText

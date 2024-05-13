@@ -11,16 +11,16 @@ export type BusinessType = z.infer<typeof BusinessTypeEnum>;
 export const BusinessCategoryEnum = z.enum(['REGISTERED_BUSINESS', 'REGISTERED_COMPANY']);
 export type BusinessCategory = z.infer<typeof BusinessCategoryEnum>;
 
-interface Wallet {
-  userId: string;
-  floatAccountId: string;
-  floatAccountUuid: string;
-  floatAccountNumber: string;
-  commissionAccountId?: string;
-  commissionAccountUuid?: string;
-  commissionAccountNumber?: string;
-  virtualBankCode?: string;
-  virtualBankName?: string;
+export interface Wallet {
+  userId?: string;
+  floatAccountId?: string | null;
+  floatAccountUuid?: string | null;
+  floatAccountNumber?: string | null;
+  commissionAccountId?: string | null;
+  commissionAccountUuid?: string | null;
+  commissionAccountNumber?: string | null;
+  virtualBankCode?: string | null;
+  virtualBankName?: string | null;
 }
 
 interface Tenant {
