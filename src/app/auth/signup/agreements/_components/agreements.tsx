@@ -38,15 +38,15 @@ export default function Agreements() {
   };
 
   return (
-    <main className="flex min-h-screen max-w-[1168px] flex-col gap-10 bg-white py-[67px] pl-[43px]">
-      <section className="flex gap-20">
+    <main className="flex min-h-screen max-w-[1168px] flex-col gap-10 bg-white p-8 lg:py-[67px] lg:pl-[43px]">
+      <section className="flex flex-col lg:flex-row lg:gap-20">
         <div className="w-[280px] bg-white">
           <Logo />
         </div>
 
-        <div className="mt-16 flex w-full flex-1 flex-col gap-10">
+        <div className="mt-8 flex w-full flex-1 flex-col gap-5 lg:mt-16 lg:gap-10">
           <BackText text="Back" onClick={closeAgreement} className="max-w-max" />
-          <div className="shadow-grey-500 max-w-[400px] overflow-clip rounded-xl bg-grey-100 p-[0.5px] shadow-sm">
+          <div className="shadow-grey-500 w-full max-w-[400px] overflow-clip rounded-xl bg-grey-100 p-[0.5px] shadow-sm">
             <ButtonSwitch
               options={options}
               activeType={activeAgreement}
@@ -57,7 +57,7 @@ export default function Agreements() {
       </section>
 
       <section className="flex gap-20">
-        <article className="w-[280px] overflow-scroll">
+        <article className="hidden w-[280px] overflow-scroll lg:block">
           <Sidebar activeAgreement={activeAgreement} />
         </article>
 

@@ -1,37 +1,25 @@
 'use client';
 
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import { useUserProfile } from '@/services/queries/user';
-import { Skeleton } from '@mui/material';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useUserProfile } from '@/services/queries/user';
 import { activateWallet } from '@/services/clients/wallet';
 import getErrorMessage from '@/utils/getErrorMessage';
 import { useNotification } from '@/shared/Notification';
+import { Wallet } from '@/types/user';
 import Button from '@/shared/Form/Button';
-import Link from 'next/link';
-
-interface LineItemProps {
-  title: string;
-  value?: string | null;
-  activated: boolean;
-}
-function LineItem(props: LineItemProps) {
-  const { title, value = '', activated } = props;
-
-  return (
-    <div className="mt-2 flex justify-between">
-      <p className="font-[300]">{title}:</p>
-      {activated && value ? (
-        <p className="font-[300]">{value}</p>
-      ) : (
-        <Skeleton animation="wave" className="w-[25ch]" variant="text" sx={{ fontSize: '14px' }} />
-      )}
-    </div>
-  );
-}
+import { Spinner } from '@/components/icons';
+import ErrorIcon from '@/assets/icons/error.svg';
+import WalletActivated from './wallet-activated';
+import AccountDetails from './account-details';
 
 let fetchUserDataInterval = 0;
 let showWaitMessageTimeout = 0;
+
+function Message({ message }: { message: string }) {
+  return <p className="text-center text-sm text-secondary-400 sm:text-base">{message}</p>;
+}
 
 export default function AccountSetup() {
   const { onMessage } = useNotification();
@@ -80,6 +68,7 @@ export default function AccountSetup() {
       const errorMessage = getErrorMessage(error);
       onMessage(errorMessage);
       setSetupFailedState(true);
+      clearTimeout(showWaitMessageTimeout);
     } finally {
       setActivatingWallet(false);
     }
@@ -107,40 +96,35 @@ export default function AccountSetup() {
 
   return (
     <div className="grid place-items-center gap-3">
-      <AccountBalanceWalletIcon className="size-24 text-primary-main" />
+      {setupFailed ? (
+        <Image alt="warning-icon" src={ErrorIcon} className="h-20 w-20" />
+      ) : (
+        <AccountBalanceWalletIcon className="size-24 text-primary-main" />
+      )}
 
       <p className="text-center text-2xl font-bold sm:text-3xl">Hi, {business?.name}</p>
 
-      {!walletActivated && (
+      {!walletActivated && !setupFailed && (
         <>
-          <p className="text-center text-sm text-secondary-400 sm:text-base">
-            Give us a moment while we provision your bank account
-          </p>
-          <p className="text-center text-sm text-secondary-400 sm:text-base">
-            Your account details will be shown below
-          </p>
+          <Message message="Give us a moment while we provision your bank account" />
+          <Message message="Your account details will be shown below" />
         </>
       )}
 
-      {walletActivated && (
-        <p className="text-center text-sm text-secondary-400 sm:text-base">
-          Here is your Katsu Account Details
-        </p>
-      )}
+      {walletActivated && <Message message="Here is your Katsu Account Details" />}
 
-      <div className="mt-5 w-full rounded-2xl border border-dotted border-primary-main/60 bg-primary-main/10 p-5">
-        <p className="mb-2 text-[18px] font-bold">Account Details</p>
-        <LineItem activated={walletActivated} title="Account Name" value={business?.name} />
-        <LineItem
-          activated={walletActivated}
-          title="Account Number"
-          value={wallet.floatAccountNumber}
-        />
-        <LineItem
-          activated={walletActivated}
-          title="Bank Name"
-          value={wallet.virtualBankName ?? 'Wema Bank'}
-        />
+      {setupFailed && <Message message="We could not complete this process, please try again" />}
+
+      <div
+        className={`mt-5 w-full rounded-2xl border border-dotted border-primary-main/60 bg-primary-main/10 p-5 ${setupFailed && 'hidden'}`}
+      >
+        {walletActivated ? (
+          <AccountDetails wallet={wallet as Wallet} businessName={business?.name ?? ''} />
+        ) : (
+          <div className="flex h-20 w-full items-center justify-center">
+            <Spinner color="text-primary-main" className="h-7 w-7" />
+          </div>
+        )}
       </div>
 
       {!walletActivated && (
@@ -157,21 +141,11 @@ export default function AccountSetup() {
           text="Retry"
           isLoading={activating}
           onClick={activateBusinessWallet}
-          className="w-full"
+          className="-mt-10 w-full max-w-56"
         />
       )}
 
-      {walletActivated && (
-        <>
-          <p className="text-center text-sm text-secondary-400 sm:text-base">
-            {`Now, let's set up your PIN`}
-          </p>
-
-          <Link className="btn-primary w-full" href="/wallet/create-pin">
-            Set up PIN
-          </Link>
-        </>
-      )}
+      {walletActivated && <WalletActivated />}
     </div>
   );
 }

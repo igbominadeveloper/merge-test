@@ -12,7 +12,12 @@ import { PasswordWithChecks } from '@/shared/Form/password-input';
 import useAuthFns from '@/hooks/useAuthFns';
 import { useFetchCities, useFetchStates } from '@/services/queries/location';
 import { SignupDto } from '@/types/auth';
-import { BusinessCategoryEnum, BusinessTypeEnum } from '@/types/user';
+import {
+  BusinessCategory,
+  BusinessCategoryEnum,
+  BusinessType,
+  BusinessTypeEnum,
+} from '@/types/user';
 import { SignUpDataType } from './types';
 import { BusinessRepSchema, BusinessRepType } from '../_validation';
 
@@ -54,6 +59,13 @@ export default function BusinessRepDetails({ detailsData, onBack, setDetailsData
   const { data: states, isFetching } = useFetchStates('NG');
   const { data: cities, isFetching: isFetchingCities } = useFetchCities('NG', watchedState);
 
+  const businessCategory: Record<BusinessType, BusinessCategory> = {
+    [BusinessTypeEnum.Enum['Sole Proprietor']]: BusinessCategoryEnum.Enum.REGISTERED_BUSINESS,
+    [BusinessTypeEnum.Enum['Limited Liability']]: BusinessCategoryEnum.Enum.REGISTERED_COMPANY,
+    [BusinessTypeEnum.Enum.Partnership]: BusinessCategoryEnum.Enum.REGISTERED_COMPANY,
+    [BusinessTypeEnum.Enum['Incorporated Trustee']]: BusinessCategoryEnum.Enum.REGISTERED_COMPANY,
+  };
+
   const onSubmit: SubmitHandler<BusinessRepType> = async data => {
     const mergedData = { ...detailsData, ...data } satisfies SignUpDataType;
     setDetailsData(mergedData);
@@ -87,9 +99,7 @@ export default function BusinessRepDetails({ detailsData, onBack, setDetailsData
         industry: mergedData?.businessType ?? BusinessTypeEnum.Enum['Sole Proprietor'],
         businessAddress: mergedData?.businessAdress ?? '',
         category:
-          mergedData.businessType === BusinessTypeEnum.Enum['Sole Proprietor']
-            ? BusinessCategoryEnum.Enum.REGISTERED_BUSINESS
-            : BusinessCategoryEnum.Enum.REGISTERED_COMPANY,
+          businessCategory[mergedData?.businessType ?? BusinessTypeEnum.Enum['Sole Proprietor']],
       },
     } satisfies SignupDto;
 

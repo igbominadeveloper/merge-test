@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import FooterText from '@/shared/Form/FormSubcomponent/FooterText';
 import { ROUTES } from '@/utils/routes';
 import { useBusinessDetailsStore } from '@/store/state/useBusinessDetails';
+import { BusinessTypeEnum } from '@/types/user';
 import { SignUpDataType } from './types';
 import { BusinessDetailSchema, BusinessDetailsType } from '../_validation';
 import AgreementLinks from './agreement-links';
@@ -91,8 +92,15 @@ export default function BusinessDetails({ onNext, setData, defaultData }: StepTy
                   label="Business Type"
                   defaultValue={defaultData?.businessType || ''}
                 >
-                  <MenuItem value="Sole Proprietor">Sole Proprietor</MenuItem>
-                  <MenuItem value="Limited Liability">Limited Liability</MenuItem>
+                  <MenuItem value={BusinessTypeEnum.Enum['Sole Proprietor']}>
+                    {BusinessTypeEnum.Enum['Sole Proprietor']}
+                  </MenuItem>
+                  <MenuItem value={BusinessTypeEnum.Enum['Limited Liability']}>
+                    {BusinessTypeEnum.Enum['Limited Liability']}
+                  </MenuItem>
+                  <MenuItem value={BusinessTypeEnum.Enum.Partnership}>
+                    {BusinessTypeEnum.Enum.Partnership}
+                  </MenuItem>
                 </MuiSelectComponent>
               );
             }}
