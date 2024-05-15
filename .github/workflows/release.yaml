@@ -47,18 +47,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create Pull Request for dev branch
-        run: |
-          curl \
-            -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -d '{ "title": "🚀 Dev - downward merge from main", "head": "main", "base": "dev", "body": "Updating `dev` with the version changes" }' \
-            https://api.github.com/repos/${{ github.repository }}/pulls
-
       - name: Create Pull Request for staging branch
         run: |
-          curl \
-            -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -d '{ "title": "🚀 Staging - downward merge from main", "head": "main", "base": "staging", "body": "Updating `staging` with the version changes" }' \
-            https://api.github.com/repos/${{ github.repository }}/pulls
+          gh pr create --base staging --head main --title "Automated PR from main to staging" --body "Automated PR from dev to staging" --merge=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Pull Request for dev branch
+        run: |
+          gh pr create --base dev --head staging --title "Automated PR from staging to dev" --body "Automated PR from dev to staging" --merge=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
