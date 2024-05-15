@@ -13,7 +13,7 @@ export default function Wrapper({
 
   return (
     <div className="flex flex-col gap-8">
-      <BackText text="Back" onClick={() => router.push(`${ROUTES.Loan}/active-loans`)} />
+      <BackText text="Back" onClick={() => router.push(`${ROUTES.Loan}/loan-history`)} />
       {children}
     </div>
   );
