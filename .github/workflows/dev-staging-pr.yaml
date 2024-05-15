@@ -1,0 +1,29 @@
+name: Auto PR Workflow
+on:
+  workflow_dispatch:
+
+jobs:
+  create-staging-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@main
+
+      - name: Create staging PR
+        run: |
+          gh pr create --base staging --head dev --title "Automated PR from dev to staging" --body "Automated PR from dev to staging" --merge=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  create-main-pr:
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@main
+
+      - name: Create main PR
+        run: |
+          gh pr create --base main --head staging --title "Automated PR from staging to main" --body "Automated PR from staging to main" --merge=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
