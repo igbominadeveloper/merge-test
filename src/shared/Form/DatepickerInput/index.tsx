@@ -36,6 +36,7 @@ function DatePickerComponent(props: DatePickerComponentType, ref: any) {
               borderColor: '#FF5630',
             },
           }}
+          format="DD/MM/YYYY"
           maxDate={maxDate}
           minDate={minDate}
           slotProps={{
