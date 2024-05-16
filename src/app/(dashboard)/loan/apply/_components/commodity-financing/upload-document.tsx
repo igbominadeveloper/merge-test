@@ -134,7 +134,7 @@ function UploadDocument({ onBack, setData, defaultData }: Props) {
       key: 'executedContracts',
     },
     {
-      name: 'Upload Profitability Analysis / Cashloop projection',
+      name: 'Upload Profitability Analysis / Cashflow projection',
       setValue: (value: File) => setValue('profitabilityAnalysis', value, { shouldValidate: true }),
       errorMessage: errors?.profitabilityAnalysis?.message || '',
       value: values.profitabilityAnalysis,

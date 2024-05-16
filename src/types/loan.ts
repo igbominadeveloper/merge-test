@@ -163,6 +163,7 @@ export interface LoanTransaction {
   requestId: string;
   loanOriginator: string;
   allDocsDigifyUploadStatus: string;
+  loanPurpose: string | null;
   docLinks: DocLinks[];
   otherCostAmount: number;
   otherCostDescription: string;

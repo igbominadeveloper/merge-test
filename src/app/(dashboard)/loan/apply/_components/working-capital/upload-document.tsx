@@ -129,14 +129,6 @@ function UploadDocument({ onBack, defaultData, setData }: Props) {
       value: values.cashlowProjection,
     },
     {
-      name: 'Upload Profitability Analysis / Cashloop projection',
-      setValue: (value: File) => setValue('profitabilityAnalysis', value),
-      errorMessage: errors?.profitabilityAnalysis?.message || '',
-      key: 'profitabilityAnalysis',
-      value: values.profitabilityAnalysis,
-    },
-
-    {
       name: 'Upload Additional Document (Optional)',
       setValue: (value: File) => setValue('additionalDocument', value, { shouldValidate: true }),
       errorMessage: errors?.additionalDocument?.message || '',
