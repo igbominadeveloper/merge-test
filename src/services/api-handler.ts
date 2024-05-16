@@ -3,6 +3,9 @@ import Storage from '@/utils/storage';
 import { v4 as uuidv4 } from 'uuid';
 import axios, { AxiosError } from 'axios';
 
+console.log({ API_URL, COUNTRY_CODE, TENANT_ID });
+console.log({ env: process.env });
+
 // we are exporting this so that it can be used on the server without any window references
 const defaultHeaders = Object.freeze({
   'Content-Type': 'application/json',

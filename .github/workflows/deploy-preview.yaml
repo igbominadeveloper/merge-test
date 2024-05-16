@@ -46,34 +46,18 @@ jobs:
       - name: Install Netlify CLI
         run: yarn add -D netlify-cli
 
-      - name: Create Deploy Message
-        id: deploymessage
-        run: |
-          DEPLOY_MESSAGE="${{ github.event.pull_request.title }}"
-          # Set it in env
-          echo "DEPLOY_MESSAGE='$DEPLOY_MESSAGE'" >> $GITHUB_OUTPUT
-
       - name: Build and Deploy the app
         id: deploy
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           PR_NUMBER: ${{ github.event.number }}
-          DEPLOY_MESSAGE: ${{ steps.deploymessage.outputs.DEPLOY_MESSAGE }}
-        run: |
-          COMMAND="netlify deploy --build --context deploy-preview --auth $NETLIFY_AUTH_TOKEN --site $NETLIFY_SITE_ID --alias deploy-preview-$PR_NUMBER --message $DEPLOY_MESSAGE"
-          OUTPUT=$(sh -c "$COMMAND")
-          NETLIFY_OUTPUT=$(echo "$OUTPUT")
-          NETLIFY_PREVIEW_URL=$(echo "$OUTPUT" | grep -Eo '(http|https)://[a-zA-Z0-9./?=_-]*(--)[a-zA-Z0-9./?=_-]*')
-          NETLIFY_LOGS_URL=$(echo "$OUTPUT" | grep -Eo '(http|https)://app.netlify.com/[a-zA-Z0-9./?=_-]*')
-          echo "NETLIFY_PREVIEW_URL=$NETLIFY_PREVIEW_URL" >> $GITHUB_OUTPUT
-          echo "NETLIFY_LOGS_URL=$NETLIFY_LOGS_URL" >> $GITHUB_OUTPUT
+          MESSAGE: 'Deploy Preview #${{ github.event.number }}: ${{ github.event.pull_request.title }}'
+        run: netlify deploy --build --context dev --auth $NETLIFY_AUTH_TOKEN --site $NETLIFY_SITE_ID --alias deploy-preview-$PR_NUMBER --message "$MESSAGE"
+
       - name: Update PR with preview URL
         uses: thollander/actions-comment-pull-request@main
         with:
           message: |
-            Netlify Preview Deployment Information
-            - Log URL: ${{ steps.deploy.outputs.NETLIFY_LOGS_URL }}
-            - Preview URL: ${{ steps.deploy.outputs.NETLIFY_PREVIEW_URL }}
-              :rocket:
+            Netlify Preview URL: https://deploy-preview-${{ github.event.number }}--katsu-web.netlify.app
           comment_tag: execution
