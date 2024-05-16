@@ -49,12 +49,12 @@ jobs:
 
       - name: Create Pull Request for staging branch
         run: |
-          gh pr create --base staging --head main --title "🤖 Automated PR from main to staging" --body "Automated PR from dev to staging" --assignee @Staefloded
+          gh pr create --base staging --head main --title "🤖 Automated PR from main to staging" --body "Automated PR from dev to staging" --reviewer @Staefloded
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request for dev branch
         run: |
-          gh pr create --base dev --head staging --title "🤖 Automated PR from staging to dev" --body "Automated PR from dev to staging" --assignee @Staefloded
+          gh pr create --base dev --head staging --title "🤖 Automated PR from staging to dev" --body "Automated PR from dev to staging" --reviewer @Staefloded
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

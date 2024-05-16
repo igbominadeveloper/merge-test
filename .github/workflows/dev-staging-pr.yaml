@@ -11,7 +11,7 @@ jobs:
 
       - name: Create staging PR
         run: |
-          gh pr create --base staging --head dev --title "🤖 Automated PR from dev to staging" --body "Automated PR from dev to staging" --assignee @Staefloded
+          gh pr create --base staging --head dev --title "🤖 Automated PR from dev to staging" --body "Automated PR from dev to staging" --reviewer @Staefloded
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -23,6 +23,6 @@ jobs:
 
       - name: Create main PR
         run: |
-          gh pr create --base main --head staging --title "🤖 Automated PR from staging to main" --body "Automated PR from staging to main" --assignee @Akinmyde
+          gh pr create --base main --head staging --title "🤖 Automated PR from staging to main" --body "Automated PR from staging to main" --reviewer @Akinmyde
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
