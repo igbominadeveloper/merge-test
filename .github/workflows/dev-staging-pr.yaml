@@ -1,4 +1,4 @@
-name: Auto PR Workflow
+name: Dev -> Staging -> Main PRs
 on:
   workflow_dispatch:
 
@@ -11,9 +11,10 @@ jobs:
 
       - name: Create staging PR
         run: |
-          gh pr create --base staging --head dev --title "🤖 Automated PR from dev to staging" --body "Automated PR from dev to staging" --reviewer Staefloded
+          gh pr create --base staging --head dev --title "🤖 Automated PR from dev to staging" --body "Automated PR from dev to staging" --reviewer ${{env.PEER_REVIEWER}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PEER_REVIEWER: ${{ secrets.PEER_REVIEWER }}
 
   create-main-pr:
     runs-on: ubuntu-latest
@@ -23,6 +24,7 @@ jobs:
 
       - name: Create main PR
         run: |
-          gh pr create --base main --head staging --title "🤖 Automated PR from staging to main" --body "Automated PR from staging to main" --reviewer Akinmyde
+          gh pr create --base main --head staging --title "🤖 Automated PR from staging to main" --body "Automated PR from staging to main" --reviewer ${{env.MAIN_REVIEWER}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MAIN_REVIEWER: ${{ secrets.MAIN_REVIEWER }}
