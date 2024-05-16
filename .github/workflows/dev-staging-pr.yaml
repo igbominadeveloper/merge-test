@@ -7,44 +7,45 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@main
+        uses: actions/checkout@v2
 
       - name: Check for commits between dev and staging
         id: check-dev-to-staging
         run: |
-          if git log staging..dev --oneline | grep .; then
+          git fetch origin
+          if [ "$(git rev-list --count origin/staging..origin/dev)" -gt 0 ]; then
             echo "commits=true" >> $GITHUB_OUTPUT
           else
             echo "commits=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Create staging PR
-        if: ${{steps.check-dev-to-staging.outputs.commits == 'true'}}
+        if: ${{ steps.check-dev-to-staging.outputs.commits == 'true' }}
         run: |
-          gh pr create --base staging --head dev --title "🤖 Automated PR from dev to staging" --body "Automated PR from dev to staging" --reviewer ${{ env.PEER_REVIEWER }}
+          gh pr create --base staging --head dev --title "🤖 Automated PR from dev to staging" --body "Automated PR from dev to staging" --reviewer ${{ secrets.PEER_REVIEWER }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PEER_REVIEWER: ${{ secrets.PEER_REVIEWER }}
 
   create-main-pr:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@main
+        uses: actions/checkout@v2
 
       - name: Check for commits between staging and main
         id: check-staging-to-main
         run: |
-          if git log main..staging --oneline | grep .; then
+          git fetch origin
+          if [ "$(git rev-list --count origin/main..origin/staging)" -gt 0 ]; then
             echo "commits=true" >> $GITHUB_OUTPUT
           else
             echo "commits=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Create main PR
-        if: ${{steps.check-staging-to-main.outputs.commits == 'true'}}
+        if: ${{ steps.check-staging-to-main.outputs.commits == 'true' }}
         run: |
-          gh pr create --base main --head staging --title "🤖 Automated PR from staging to main" --body "Automated PR from staging to main" --reviewer ${{ env.MAIN_REVIEWER }}
+          gh pr create --base main --head staging --title "🤖 Automated PR from staging to main" --body "Automated PR from staging to main" --reviewer ${{ secrets.MAIN_REVIEWER }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAIN_REVIEWER: ${{ secrets.MAIN_REVIEWER }}
