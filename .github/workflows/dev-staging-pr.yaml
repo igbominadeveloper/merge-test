@@ -9,7 +9,17 @@ jobs:
       - name: Check out code
         uses: actions/checkout@main
 
+      - name: Check for commits between dev and staging
+        id: check-dev-to-staging
+        run: |
+          if git log staging..dev --oneline | grep .; then
+            echo "commits=true" >> $GITHUB_OUTPUT
+          else
+            echo "commits=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Create staging PR
+        if: ${{steps.check-dev-to-staging.outputs.commits == 'true'}}
         run: |
           gh pr create --base staging --head dev --title "🤖 Automated PR from dev to staging" --body "Automated PR from dev to staging" --reviewer ${{ env.PEER_REVIEWER }}
         env:
@@ -22,7 +32,17 @@ jobs:
       - name: Check out code
         uses: actions/checkout@main
 
+      - name: Check for commits between staging and main
+        id: check-staging-to-main
+        run: |
+          if git log main..staging --oneline | grep .; then
+            echo "commits=true" >> $GITHUB_OUTPUT
+          else
+            echo "commits=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Create main PR
+        if: ${{steps.check-staging-to-main.outputs.commits == 'true'}}
         run: |
           gh pr create --base main --head staging --title "🤖 Automated PR from staging to main" --body "Automated PR from staging to main" --reviewer ${{ env.MAIN_REVIEWER }}
         env:
