@@ -95,7 +95,7 @@ function DetailSection({ lineItems, title }: Props) {
 export default function DetailSections({ id }: { id: string }) {
   const { data } = useLoanTransaction(id);
 
-  const returnObject = (obj: { title: string; value: string | undefined }) => {
+  const returnObject = (obj: { title: string; value: string | undefined | null }) => {
     return obj?.value ? [{ title: obj?.title, value: obj?.value || '' }] : [];
   };
 
@@ -146,10 +146,15 @@ export default function DetailSections({ id }: { id: string }) {
           title: 'Loan Tenor',
           value: `${data?.paymentTenorInDays} days`,
         }),
+
+        ...returnObject({
+          title: 'Loan Purpose',
+          value: data?.loanPurpose,
+        }),
       ],
     },
     {
-      title: 'Logistics',
+      title: "Logistics or Offtaker's Information",
       lineItems: [
         ...returnObject({
           title: 'Logistics cost per truck',
