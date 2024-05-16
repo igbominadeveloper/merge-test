@@ -114,7 +114,7 @@ export default function Table(props: LoanTransactionFilter) {
 
   useEffect(() => {
     const queryString = toUrlQuery(query);
-    router.replace(`${ROUTES.Loan}/active-loans?${queryString}`);
+    router.replace(`${ROUTES.Loan}/loan-history?${queryString}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, loanStatus]);
 

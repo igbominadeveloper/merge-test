@@ -33,7 +33,13 @@ export default function Branding() {
         <Typography className="text-2xl font-bold">Transactions with Katsu</Typography>
       </Stack>
       <div className="self-center overflow-hidden rounded-xl">
-        <Image className="min-h-[520px] object-cover" src={BankAd} alt="ad image" />
+        <Image
+          className="min-h-[520px] object-cover"
+          placeholder="blur"
+          quality={50}
+          src={BankAd}
+          alt="ad image"
+        />
       </div>
     </div>
   );

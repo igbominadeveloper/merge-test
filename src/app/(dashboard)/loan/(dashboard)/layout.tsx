@@ -9,7 +9,7 @@ import InfoStats from '../_components/info-stats';
 
 const options = [
   { label: 'Apply for Loans', value: '' },
-  { label: 'Active Loans', value: 'active-loans' },
+  { label: 'Loan History', value: 'loan-history' },
 ];
 
 interface Props {
