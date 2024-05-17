@@ -9,18 +9,22 @@ const Encrypt = {
       return '';
     }
 
-    const iv = randomBytes(IV_LENGTH); // IV length is 16 bytes for CBC
-    const cipher = createCipheriv('aes-256-cbc', Buffer.from(KEY, 'hex'), iv);
-    cipher.setAutoPadding(true); // Enable automatic padding for CBC
+    try {
+      const iv = randomBytes(IV_LENGTH); // IV length is 16 bytes for CBC
+      const cipher = createCipheriv('aes-256-cbc', Buffer.from(KEY, 'hex'), iv);
+      cipher.setAutoPadding(true); // Enable automatic padding for CBC
 
-    let encrypted = cipher.update(data, 'utf8', 'hex');
-    encrypted += cipher.final('hex');
-    const ivStr = iv.toString('hex');
+      let encrypted = cipher.update(data, 'utf8', 'hex');
+      encrypted += cipher.final('hex');
+      const ivStr = iv.toString('hex');
 
-    return ivStr + encrypted;
+      return ivStr + encrypted;
+    } catch {
+      return null;
+    }
   },
 
-  decrypt(value: string | null): string {
+  decrypt(value: string | null) {
     if (!value) {
       return '';
     }
@@ -37,8 +41,7 @@ const Encrypt = {
 
       return decrypted;
     } catch (error) {
-      //
-      return '';
+      return null;
     }
   },
 };

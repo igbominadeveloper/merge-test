@@ -24,6 +24,8 @@ async function getTransactions(query: string) {
     const userEmail = Encrypt.decrypt(hashedCu.value);
     const token = Encrypt.decrypt(hashedToken.value);
 
+    if (!userEmail || !token) throw new Error('User is not authenticated');
+
     const headers = {
       authorization: token,
       'x-created-by': userEmail,

@@ -15,8 +15,8 @@ export const axiosInstance = axios.create({
   headers: defaultHeaders,
 });
 
-export const accessToken = Storage.getCookie('token') || '';
-export const currentUser = Storage.getCookie('cu') || '';
+const accessToken = Storage.getCookie('token') || '';
+const currentUser = Storage.getCookie('cu') || '';
 
 const apiHandler = axios.create({
   baseURL: API_URL,
