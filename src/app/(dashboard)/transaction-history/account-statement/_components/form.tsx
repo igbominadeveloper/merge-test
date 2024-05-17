@@ -36,8 +36,7 @@ export default function AccountStatementForm(props: Props) {
             label="Start Date"
             value={dayjs(getValues('startDate') || null)}
             onChange={date => {
-              const newDate = new Date(date as unknown as Date);
-              field.onChange(newDate);
+              field.onChange(date?.toDate());
             }}
           />
         )}
@@ -54,8 +53,7 @@ export default function AccountStatementForm(props: Props) {
             {...field}
             value={dayjs(getValues('endDate') || null)}
             onChange={date => {
-              const newDate = new Date(date as unknown as Date);
-              field.onChange(newDate);
+              field.onChange(date?.toDate());
             }}
           />
         )}
