@@ -302,7 +302,7 @@ export default function getAccountStatementTemplate({
     .replace('{{internal-reference}}', accountNumber)
     .replace('{{startDate}}', startDate)
     .replace('{{endDate}}', endDate)
-    .replace('{{rows}}', lineItems)
+    .replace('{{rows}}', lineItems ?? '')
     .replace('{{total-debit}}', formatAmount(totalDebit))
     .replace('{{total-credit}}', formatAmount(totalCredit))
     .replace('{{closing-balance}}', formatAmount(closingBalance))

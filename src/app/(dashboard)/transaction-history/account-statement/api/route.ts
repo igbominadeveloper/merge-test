@@ -7,7 +7,6 @@ import chromium from '@sparticuz/chromium';
 import { AccountStatementPayload, AccountStatementResponse } from '@/types/transaction';
 import walletRoute from '@/services/routes/wallet.route';
 import { APIResponse } from '@/types/general';
-import getErrorMessage from '@/utils/getErrorMessage';
 import Encrypt from '@/utils/encrypt';
 import { axiosInstance } from '@/services/api-handler';
 import getAccountStatementTemplate from '@/utils/getAccountStatementTemplate';
@@ -37,9 +36,8 @@ async function getTransactions(query: string) {
     );
 
     return response.data?.data?.results;
-  } catch (error) {
-    const errorMessage = getErrorMessage(error);
-    throw new Error(errorMessage);
+  } catch {
+    return [];
   }
 }
 
@@ -85,7 +83,6 @@ export async function POST(request: Request) {
     await page.setContent(template, { waitUntil: 'domcontentloaded' });
     const pdfBuffer = await page.pdf({
       format: 'A4',
-      // omitBackground: true,
       printBackground: true,
     });
     await browser.close();
