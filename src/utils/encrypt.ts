@@ -6,7 +6,6 @@ const Encrypt = {
   encrypt(data: string): any | PromiseLike<ArrayBuffer> {
     return !data ? null : CryptoJS.AES.encrypt(JSON.stringify(data), KEY).toString();
   },
-
   decrypt(value: string | null): any {
     if (!value) {
       return null;
