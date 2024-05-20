@@ -62,8 +62,8 @@ export async function POST(request: Request) {
       accountNumber,
       businessAddress,
       businessName,
-      endDate: formatDateString(endDate, 'MMM YYYY'),
-      startDate: formatDateString(startDate, 'MMM YYYY'),
+      endDate: formatDateString(endDate, 'D MMM YYYY'),
+      startDate: formatDateString(startDate, 'D MMM YYYY'),
       transactions,
     });
 

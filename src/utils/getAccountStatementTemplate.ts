@@ -82,7 +82,7 @@ export default function getAccountStatementTemplate({
 
     .header-right {
       background-color: #919eab14;
-      padding: 16px 12px;
+      padding: 12px;
       min-width: 176px;
       border-radius: 8px;
       max-width: 300px;
@@ -92,7 +92,7 @@ export default function getAccountStatementTemplate({
       display: grid;
       place-items: start;
       border-bottom: 1px solid #919eab33;
-      padding: 12px 0px;
+      padding: 8px 0px;
       grid-template-columns: 1fr 1fr;
     }
 
@@ -184,7 +184,7 @@ export default function getAccountStatementTemplate({
             <p class="header-left-business">{{business-name}}</p>
           </div>
 
-          <p class="header-left-date">{{startDate}} TO {{endDate}}</p>
+          <p class="header-left-date">{{startDate}} - {{endDate}}</p>
         </div>
 
         <div class="header-right">
