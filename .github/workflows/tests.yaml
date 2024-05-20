@@ -17,11 +17,6 @@ jobs:
         with:
           node-version: '>=20.12.2'
 
-      - name: Setup Node.js
-        uses: actions/setup-node@main
-        with:
-          node-version: '>=20.12.2'
-
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
@@ -39,3 +34,5 @@ jobs:
 
       - name: Run tests
         run: yarn test
+        env:
+          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
