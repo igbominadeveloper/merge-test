@@ -70,7 +70,7 @@ const useAuthFns = () => {
         if (res) {
           await fns.login(
             { username: email, password: data?.password },
-            `${ROUTES['verify-email']}?id=${encodeURIComponent(Encrypt.encrypt(`${email},${businessName}`))}`,
+            `${ROUTES['verify-email']}?id=${encodeURIComponent(Encrypt.encrypt(`${email},${businessName}`) ?? '')}`,
           );
         }
 

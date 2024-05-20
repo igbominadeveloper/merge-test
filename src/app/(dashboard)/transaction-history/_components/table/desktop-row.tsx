@@ -1,8 +1,8 @@
 import { Column, TypeOrNull } from '@/types/general';
 import Button from '@/shared/Form/Button';
 import { capitalize } from '@mui/material';
-import TransactionStatusBadge from '@/components/Dashboard/transaction-history/TransactionStatusBadge';
 import { Transaction, TransactionType, TransactionTypeEnum } from '@/types/transaction';
+import TransactionStatusBadge from '../transaction-status-badge';
 
 interface RowProps {
   column: Column<Transaction>;

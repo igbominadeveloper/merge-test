@@ -140,38 +140,41 @@ export const WorkingCapitalSchema = z.object({
 
 export type WorkingCapitalSchemaType = z.infer<typeof WorkingCapitalSchema>;
 
-export const UploadWorkingCapitalSchema = z
-  .object({
-    proFomaInvoice: validateZodFile({
-      requiredMessage: 'Please upload your pro-forma invoice',
-      acceptedFileTypes: ACCEPTED_FILE_TYPES,
-    }),
-    auditedFinancialStatement: validateZodFile({
-      requiredMessage: 'Please upload your audited financial statement',
-      acceptedFileTypes: ACCEPTED_FILE_TYPES,
-    }),
-    bankStatement: validateZodFile({
-      requiredMessage: 'Please upload your bank statement',
-      acceptedFileTypes: ACCEPTED_FILE_TYPES,
-    }),
-    boardResolution: validateZodFile({
-      requiredMessage: 'Please upload your formal application/board resolution',
-      acceptedFileTypes: ACCEPTED_FILE_TYPES,
-    }),
-    managementProfile: validateZodFile({
-      requiredMessage: 'Please upload your management profile',
-      acceptedFileTypes: ACCEPTED_FILE_TYPES,
-    }),
-    executedContracts: validateZodFile({
-      requiredMessage: 'Please upload your executed contracts',
-      acceptedFileTypes: ACCEPTED_FILE_TYPES,
-    }),
-    cashlowProjection: validateZodFile({
-      requiredMessage: 'Please upload your cashflow projection',
-      acceptedFileTypes: ACCEPTED_FILE_TYPES,
-    }),
-  })
-  .merge(BaseUploadSchema);
+export const UploadWorkingCapitalSchema = z.object({
+  proFomaInvoice: validateZodFile({
+    requiredMessage: 'Please upload your pro-forma invoice',
+    acceptedFileTypes: ACCEPTED_FILE_TYPES,
+  }),
+  auditedFinancialStatement: validateZodFile({
+    requiredMessage: 'Please upload your audited financial statement',
+    acceptedFileTypes: ACCEPTED_FILE_TYPES,
+  }),
+  bankStatement: validateZodFile({
+    requiredMessage: 'Please upload your bank statement',
+    acceptedFileTypes: ACCEPTED_FILE_TYPES,
+  }),
+  boardResolution: validateZodFile({
+    requiredMessage: 'Please upload your formal application/board resolution',
+    acceptedFileTypes: ACCEPTED_FILE_TYPES,
+  }),
+  managementProfile: validateZodFile({
+    requiredMessage: 'Please upload your management profile',
+    acceptedFileTypes: ACCEPTED_FILE_TYPES,
+  }),
+  executedContracts: validateZodFile({
+    requiredMessage: 'Please upload your executed contracts',
+    acceptedFileTypes: ACCEPTED_FILE_TYPES,
+  }),
+  cashlowProjection: validateZodFile({
+    requiredMessage: 'Please upload your cashflow projection',
+    acceptedFileTypes: ACCEPTED_FILE_TYPES,
+  }),
+  additionalDocument: validateZodFile({
+    requiredMessage: 'Please upload additional document',
+    acceptedFileTypes: ACCEPTED_FILE_TYPES,
+    isRequired: false,
+  }),
+});
 
 export type UploadWorkingCapitalSchemaType = z.infer<typeof UploadWorkingCapitalSchema>;
 

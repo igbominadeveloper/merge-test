@@ -1,10 +1,8 @@
-import React from 'react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { Transaction, TransactionType, TransactionTypeEnum } from '@/types/transaction';
 import { formatAmount, toUrlQuery } from '@/utils/helpers';
-import Filters from '@/components/Dashboard/transaction-history/table/filters';
 import MobileTable from '@/components/table/mobile';
 import { TRANSACTION_ICONS } from '@/utils/dashboardItems';
 import { useTransactionFilters } from '@/hooks/useTransactionFilters';
@@ -12,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/utils/routes';
 import { useAllTransactions } from '@/services/queries/transaction';
 import { TypeOrNull } from '@/types/general';
+import MobileFilters from './filters/mobile';
 
 dayjs.extend(localizedFormat);
 
@@ -63,7 +62,7 @@ function Row({ transaction, transactionType, onRowClick }: RowProps) {
   );
 }
 
-export default function TransactionTable() {
+export default function MobileTransactionTable() {
   const router = useRouter();
 
   const {
@@ -110,7 +109,7 @@ export default function TransactionTable() {
   return (
     <>
       <div className="mb-4">
-        <Filters
+        <MobileFilters
           setEndDate={setEndDate}
           setSearch={setSearch}
           setStartDate={setStartDate}

@@ -10,6 +10,7 @@ const walletRoute = {
   fundWithUssd: `${baseUrl}/wallet/fund/ussd/invoke`,
   accountBalance: `${baseUrl}/accounts/balance`,
   getAccountDetails: `${baseUrl}/accounts/search`,
+  getAccountStatementTransactions: `${baseUrl}/accounts/statement`,
 };
 
 export default walletRoute;
