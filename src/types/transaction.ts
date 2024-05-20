@@ -172,3 +172,35 @@ export interface TransferResponse {
   message: string;
   requestId: string;
 }
+
+export interface AccountStatementResponse extends Omit<AllTransactions, 'results'> {
+  results: AccountStatementLineItem[];
+}
+export interface AccountStatementLineItem {
+  accountId: string;
+  amount: number;
+  bankName: string;
+  created: string;
+  currency: string;
+  description: string;
+  externalReference: string;
+  id: string;
+  narration: string;
+  newBalance: number;
+  previousBalance: number;
+  recipientAccount: string;
+  reference: string;
+  senderAccount: string;
+  status: string;
+  tenantId: string;
+  type: string;
+  userId: string;
+}
+
+export interface AccountStatementPayload {
+  accountNumber: string;
+  businessAddress: string;
+  businessName: string;
+  endDate: string;
+  startDate: string;
+}

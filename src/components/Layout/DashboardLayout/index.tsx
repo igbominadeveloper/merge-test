@@ -35,9 +35,9 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (data) {
       if (!data?.emailVerification) {
-        router.push(
-          `${ROUTES['verify-email']}?id=${encodeURIComponent(Encrypt.encrypt(`${data?.username},${business?.name}`))}`,
-        );
+        const encryptedDetails = Encrypt.encrypt(`${data?.username},${business?.name}`);
+        // TODO what to do here? this is quite unlikely to happen but in the case it does, for now we will just default to an empty string
+        router.push(`${ROUTES['verify-email']}?id=${encodeURIComponent(encryptedDetails ?? '')}`);
       } else {
         setHasLoaded(true);
       }
