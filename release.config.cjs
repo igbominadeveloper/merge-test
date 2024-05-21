@@ -18,11 +18,7 @@ module.exports = {
         npmPublish: false,
       },
     ],
-    [
-      "@semantic-release/github",
-      {
-        assets: [".next/**"],
-      },
-    ],
+    "@semantic-release/git",
+    "@semantic-release/github",
   ],
 };

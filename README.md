@@ -2,10 +2,4 @@
 
 Editing this file now
 
-Another edit goes
-
-Adding more lines
-
-Another new line
-
-Extra line
+Another commit

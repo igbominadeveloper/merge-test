@@ -1,2 +1,4 @@
-// File: config/release-rules.cjs
-module.exports = [{ type: "chore", release: "minor" }];
+module.exports = [
+  { type: "chore", release: "patch" },
+  { type: "breaking", release: "major" },
+];
