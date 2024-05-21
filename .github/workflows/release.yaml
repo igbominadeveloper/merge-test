@@ -47,14 +47,35 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check for commits between main and staging
+        id: check-main-to-staging
+        run: |
+          git fetch origin
+          if [ "$(git rev-list --count origin/staging..origin/main)" -gt 0 ]; then
+            echo "commits=true" >> $GITHUB_OUTPUT
+          else
+            echo "commits=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check for existing PR
+        id: check-pr-staging-to-dev
+        run: |
+          if gh pr list --base dev --head staging --json number --jq '.[0].number' | grep -q '[0-9]'; then
+            echo "pr_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "pr_exists=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create Pull Request for staging branch
         run: |
-          gh pr create --base staging --head main --title "🤖 Automated PR from main to staging" --body "Automated PR from dev to staging" --reviewer @Staefloded
+          gh pr create --base staging --head main --title "🤖 Automated PR from main to staging" --body "Automated PR from main to staging"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request for dev branch
         run: |
-          gh pr create --base dev --head staging --title "🤖 Automated PR from staging to dev" --body "Automated PR from dev to staging" --reviewer @Staefloded
+          gh pr create --base dev --head staging --title "🤖 Automated PR from staging to dev" --body "Automated PR from staging to dev"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
