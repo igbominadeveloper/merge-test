@@ -34,7 +34,7 @@ jobs:
       - name: Create staging PR
         if: ${{ steps.check-dev-to-staging.outputs.commits == 'true' && steps.check-pr-dev-to-staging.outputs.pr_exists == 'false' }}
         run: |
-          gh pr create --base staging --head dev --title "🤖 Automated PR from dev to staging" --body "Automated PR from dev to staging" --reviewer ${{ secrets.PEER_REVIEWER }}
+          gh pr create --base staging --head dev --title "🤖 Automated PR from dev to staging" --body "Automated PR from dev to staging"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -68,7 +68,7 @@ jobs:
       - name: Create main PR
         if: ${{ steps.check-staging-to-main.outputs.commits == 'true' && steps.check-pr-staging-to-main.outputs.pr_exists == 'false' }}
         run: |
-          gh pr create --base main --head staging --title "🤖 Automated PR from staging to main" --body "Automated PR from staging to main" --reviewer ${{ secrets.MAIN_REVIEWER }}
+          gh pr create --base main --head staging --title "🤖 Automated PR from staging to main" --body "Automated PR from staging to main"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAIN_REVIEWER: ${{ secrets.MAIN_REVIEWER }}
