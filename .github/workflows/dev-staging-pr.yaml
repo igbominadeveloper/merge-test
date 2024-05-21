@@ -3,9 +3,16 @@ name: Dev -> Staging -> Main PRs
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   create-staging-pr:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latests
+      
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -71,4 +78,3 @@ jobs:
           gh pr create --base main --head staging --title "🤖 Automated PR from staging to main" --body "Automated PR from staging to main"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MAIN_REVIEWER: ${{ secrets.MAIN_REVIEWER }}
