@@ -41,7 +41,13 @@ function Wrapper() {
       <div className="mt-6 flex items-center justify-between gap-[50px] rounded-2xl bg-white p-5 sm:p-10">
         <div className="flex-1">{render[activeType]}</div>
         <div className="h-full max-h-[330px] max-w-[480px] flex-1 object-cover">
-          <Image className="h-full w-full" alt="funding-ad" src={FundingAd} />
+          <Image
+            className="h-full w-full"
+            alt="funding-ad"
+            src={FundingAd}
+            quality={50}
+            placeholder="blur"
+          />
         </div>
       </div>
     </>

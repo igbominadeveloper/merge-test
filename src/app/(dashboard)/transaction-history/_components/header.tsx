@@ -9,7 +9,7 @@ export default function PageHeader({ generateStatement }: Props) {
     <header className="flex flex-col justify-between gap-6 lg:flex-row">
       <PageTitle title="Transaction History" />
       <Button
-        className="hidden rounded-lg px-4
+        className="rounded-lg px-4
          font-bold capitalize"
         variant="light-primary"
         handleClick={generateStatement}

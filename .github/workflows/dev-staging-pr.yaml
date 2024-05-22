@@ -1,17 +1,47 @@
-name: Auto PR Workflow
+name: Dev -> Staging -> Main PRs
+
 on:
   workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
 
 jobs:
   create-staging-pr:
     runs-on: ubuntu-latest
+      
     steps:
       - name: Check out code
         uses: actions/checkout@main
 
-      - name: Create staging PR
+      - name: Check for commits between dev and staging
+        id: check-dev-to-staging
         run: |
-          gh pr create --base staging --head dev --title "Automated PR from dev to staging" --body "Automated PR from dev to staging"
+          git fetch origin
+          if [ "$(git rev-list --count origin/staging..origin/dev)" -gt 0 ]; then
+            echo "commits=true" >> $GITHUB_OUTPUT
+          else
+            echo "commits=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check for existing PR
+        id: check-pr-dev-to-staging
+        run: |
+          if gh pr list --base staging --head dev --json number --jq '.[0].number' | grep -q '[0-9]'; then
+            echo "pr_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "pr_exists=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create staging PR
+        if: ${{ steps.check-dev-to-staging.outputs.commits == 'true' && steps.check-pr-dev-to-staging.outputs.pr_exists == 'false' }}
+        run: |
+          gh pr create --base staging --head dev --title "🤖 Automated PR from dev to staging" --body "Automated PR from dev to staging"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -21,8 +51,30 @@ jobs:
       - name: Check out code
         uses: actions/checkout@main
 
-      - name: Create main PR
+      - name: Check for commits between staging and main
+        id: check-staging-to-main
         run: |
-          gh pr create --base main --head staging --title "Automated PR from staging to main" --body "Automated PR from staging to main"
+          git fetch origin
+          if [ "$(git rev-list --count origin/main..origin/staging)" -gt 0 ]; then
+            echo "commits=true" >> $GITHUB_OUTPUT
+          else
+            echo "commits=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check for existing PR
+        id: check-pr-staging-to-main
+        run: |
+          if gh pr list --base main --head staging --json number --jq '.[0].number' | grep -q '[0-9]'; then
+            echo "pr_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "pr_exists=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create main PR
+        if: ${{ steps.check-staging-to-main.outputs.commits == 'true' && steps.check-pr-staging-to-main.outputs.pr_exists == 'false' }}
+        run: |
+          gh pr create --base main --head staging --title "🤖 Automated PR from staging to main" --body "Automated PR from staging to main"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

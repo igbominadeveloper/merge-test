@@ -74,7 +74,13 @@ export default function Dashboard() {
       </div>
       <TransactionOverview />
       <div className="flex h-[133px] w-full overflow-hidden rounded-lg md:h-[158px]">
-        <Image className="h-full w-full" src={DashboardAd} alt="ad image" />
+        <Image
+          className="h-full w-full"
+          src={DashboardAd}
+          alt="ad image"
+          quality={50}
+          placeholder="blur"
+        />
       </div>
       {showAccountDetails && (
         <ModalComponent
