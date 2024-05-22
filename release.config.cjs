@@ -20,12 +20,6 @@ module.exports = {
       },
     ],
     '@semantic-release/github',
-    [
-      '@semantic-release/git',
-      {
-        assets: ['package.json', 'CHANGELOG.md', 'yarn.lock'], // Specify files to commit
-        message: 'chore(release): version ${nextRelease.version} [skip ci]', // Optional: commit message template
-      },
-    ],
+    '@semantic-release/git',
   ],
 };
