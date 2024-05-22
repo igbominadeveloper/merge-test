@@ -65,10 +65,6 @@ function UploadDocument({ onBack, defaultData, setData }: Props) {
         'proFomaInvoice',
         defaultData?.documents,
       ),
-      profitabilityAnalysis: getUploadDefaultValue<UploadSchemaKey>(
-        'profitabilityAnalysis',
-        defaultData?.documents,
-      ),
       additionalDocument: getUploadDefaultValue<UploadSchemaKey>(
         'additionalDocument',
         defaultData?.documents,

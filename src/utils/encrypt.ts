@@ -1,22 +1,47 @@
-import CryptoJS from 'crypto-js';
+import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 
 const KEY = process.env.ENCRYPT_KEY!;
+const IV_LENGTH = 16;
 
 const Encrypt = {
-  encrypt(data: string): any | PromiseLike<ArrayBuffer> {
-    return !data ? null : CryptoJS.AES.encrypt(JSON.stringify(data), KEY).toString();
-  },
-
-  decrypt(value: string | null): any {
-    if (!value) {
-      return null;
+  encrypt(data: string) {
+    if (!data) {
+      return '';
     }
 
     try {
-      const decryptData = CryptoJS.AES.decrypt(value.toString(), KEY);
-      return JSON.parse(decryptData.toString(CryptoJS.enc.Utf8));
+      const iv = randomBytes(IV_LENGTH); // IV length is 16 bytes for CBC
+      const cipher = createCipheriv('aes-256-cbc', Buffer.from(KEY, 'hex'), iv);
+      cipher.setAutoPadding(true); // Enable automatic padding for CBC
+
+      let encrypted = cipher.update(data, 'utf8', 'hex');
+      encrypted += cipher.final('hex');
+      const ivStr = iv.toString('hex');
+
+      return ivStr + encrypted;
+    } catch {
+      return null;
+    }
+  },
+
+  decrypt(value: string | null) {
+    if (!value) {
+      return '';
+    }
+
+    try {
+      const iv = Buffer.from(value.slice(0, 32), 'hex'); // IV + encrypted data length is 32 bytes
+      const encryptedData = Buffer.from(value.slice(32), 'hex');
+
+      const decipher = createDecipheriv('aes-256-cbc', Buffer.from(KEY, 'hex'), iv);
+      decipher.setAutoPadding(true); // Enable automatic padding for CBC
+
+      let decrypted = decipher.update(encryptedData as unknown as string, 'hex', 'utf8');
+      decrypted += decipher.final('utf8');
+
+      return decrypted;
     } catch (error) {
-      if (typeof window !== 'undefined') window.location.href = '/logout';
+      return null;
     }
   },
 };

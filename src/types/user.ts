@@ -60,7 +60,7 @@ interface Tenant {
   tenantHandle: string;
 }
 
-interface Business {
+export interface Business {
   _id: string;
   name: string;
   phone: string;

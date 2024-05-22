@@ -39,7 +39,10 @@ function Balance() {
             className="flex cursor-pointer items-center gap-1 text-white"
             onClick={() => refetch()}
           >
-            <RefreshIcon className={`h-5 w-5 font-bold ${isFetching && 'animate-spin'}`} /> Refresh
+            <RefreshIcon
+              className={`h-5 w-5 font-bold ${isFetching && !isLoading && 'animate-spin'}`}
+            />{' '}
+            Refresh
           </div>
         </div>
         <div
